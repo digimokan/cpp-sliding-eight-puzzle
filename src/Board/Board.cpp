@@ -53,6 +53,19 @@ bool Board::not_legal_board () const {
   return (! this->is_legal_board());
 }
 
+bool Board::is_empty_board () const {
+  bool board_empty{ true };
+  for (const auto& sq : this->squares) {
+    if (sq.non_empty())
+      board_empty = false;
+  }
+  return board_empty;
+}
+
+bool Board::not_empty_board () const {
+  return (! this->is_empty_board());
+}
+
 /*******************************************************************************
 * HELPER METHODS
 *******************************************************************************/

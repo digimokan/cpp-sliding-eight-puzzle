@@ -59,6 +59,8 @@ public:
 
   // specialized methods
   InitStatus initialize (const std::string&);
+  bool is_empty_board () const;
+  bool not_empty_board () const;
   bool is_legal_board () const;
   bool not_legal_board () const;
   bool is_winning_board () const;
