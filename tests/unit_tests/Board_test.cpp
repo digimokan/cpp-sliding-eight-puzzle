@@ -19,7 +19,7 @@ TEST_CASE("initialize board") {
   Board board{};
 
   SUBCASE("uninitialized board") {
-    CHECK_UNARY(board.not_legal_board());
+    CHECK_UNARY(board.is_empty_board());
   }
 
   SUBCASE("init legal board") {
