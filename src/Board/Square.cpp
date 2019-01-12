@@ -38,3 +38,7 @@ bool Square::is_empty () const {
   return (this->val == SquareVal::EMPTY);
 }
 
+bool Square::non_empty () const {
+  return (! this->is_empty());
+}
+

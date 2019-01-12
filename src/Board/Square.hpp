@@ -39,6 +39,7 @@ public:
   SquareVal get_val () const;
   void set_val (SquareVal);
   bool is_empty () const;
+  bool non_empty () const;
 
 private:
 
