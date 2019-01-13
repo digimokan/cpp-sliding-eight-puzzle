@@ -2,40 +2,48 @@
 module:   Square
 author:   digimokan
 date:     11 JAN 2019
-purpose:  a board square, which can contain SquareVal (1-8, or empty)
+purpose:  a board square, which can contain val 1-8, or 0 for empty
 *******************************************************************************/
+
+/*******************************************************************************
+* SYSTEM INCLUDES
+*******************************************************************************/
+
+#include <cassert>
+#include <cstdint>
 
 /*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
 #include "Square.hpp"
-#include "SquareVal.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
 *******************************************************************************/
 
 Square::Square ()
-  : val{SquareVal::EMPTY} { }
+  : val{0} { }
 
-Square::Square (SquareVal val)
-  : val{val} { }
+Square::Square (uint8_t val)
+    : val{val} {
+  assert(this->val <= 8);
+}
 
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-SquareVal Square::get_val () const {
+uint8_t Square::get_val () const {
   return this->val;
 }
 
-void Square::set_val (SquareVal in_val) {
+void Square::set_val (uint8_t in_val) {
   this->val = in_val;
 }
 
 bool Square::is_empty () const {
-  return (this->val == SquareVal::EMPTY);
+  return (this->val == 0);
 }
 
 bool Square::non_empty () const {

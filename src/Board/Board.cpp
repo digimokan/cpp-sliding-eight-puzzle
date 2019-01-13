@@ -12,6 +12,7 @@ purpose:  a 3x3 eight-puzzle board of Square objects
 #include <array>
 #include <cassert>
 #include <cstddef>
+#include <cstdint>
 #include <string>
 #include <unordered_set>
 
@@ -21,7 +22,6 @@ purpose:  a 3x3 eight-puzzle board of Square objects
 
 #include "Board.hpp"
 #include "Square.hpp"
-#include "SquareVal.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
@@ -43,7 +43,7 @@ Board::InitStatus Board::initialize (const std::string& input_str) {
 }
 
 bool Board::is_legal_board () const {
-  std::unordered_set<SquareVal> found_vals;
+  std::unordered_set<uint8_t> found_vals;
   for (const auto& sq : this->squares)
     found_vals.insert(sq.get_val());
   return (found_vals.size() == 9);
@@ -98,46 +98,9 @@ Board::InitStatus Board::check_input_str (const std::string& input_str) const {
 Board::InitStatus Board::init_board_from_input_str (const std::string& input_str) {
   Board::InitStatus status{ Board::InitStatus::SUCCESS };
   for (size_t i = 0; i < this->squares.size(); i++)
-    this->squares.at(i).set_val( this->map_square_val(input_str[i]) );
+    this->squares.at(i).set_val(stoi(input_str.substr(i, 1)));
   if (this->not_legal_board())
     status = Board::InitStatus::ERROR_UNKNOWN_ILLEGAL_BOARD_CREATED;
   return status;
-}
-
-SquareVal Board::map_square_val (const char& ch) const {
-  SquareVal return_sq;
-  switch (ch) {
-    case '0':
-      return_sq = SquareVal::EMPTY;
-      break;
-    case '1':
-      return_sq = SquareVal::ONE;
-      break;
-    case '2':
-      return_sq = SquareVal::TWO;
-      break;
-    case '3':
-      return_sq = SquareVal::THREE;
-      break;
-    case '4':
-      return_sq = SquareVal::FOUR;
-      break;
-    case '5':
-      return_sq = SquareVal::FIVE;
-      break;
-    case '6':
-      return_sq = SquareVal::SIX;
-      break;
-    case '7':
-      return_sq = SquareVal::SEVEN;
-      break;
-    case '8':
-      return_sq = SquareVal::EIGHT;
-      break;
-    default:
-      assert(false);
-      break;
-  }
-  return return_sq;
 }
 

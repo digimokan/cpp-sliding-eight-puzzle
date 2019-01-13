@@ -2,17 +2,17 @@
 module:   Square
 author:   digimokan
 date:     11 JAN 2019
-purpose:  a board square, which can contain SquareVal (1-8, or empty)
+purpose:  a board square, which can contain val 1-8, or 0 for empty
 *******************************************************************************/
 
 #ifndef SQUARE_HPP
 #define SQUARE_HPP 1
 
 /*******************************************************************************
-* FORWARD DECLARES
+* SYSTEM INCLUDES
 *******************************************************************************/
 
-enum class SquareVal;
+#include <cstdint>
 
 /*******************************************************************************
 * INTERFACE
@@ -24,7 +24,7 @@ public:
 
   // constructors
   Square ();
-  explicit Square (SquareVal);
+  explicit Square (uint8_t);
 
   // destructor
   ~Square () = default;
@@ -36,15 +36,15 @@ public:
   Square& operator= (Square&& rh) = default;
 
   // specialized methods
-  SquareVal get_val () const;
-  void set_val (SquareVal);
+  uint8_t get_val () const;
+  void set_val (uint8_t);
   bool is_empty () const;
   bool non_empty () const;
 
 private:
 
   // fields
-  SquareVal val;
+  uint8_t val;
 
 };
 

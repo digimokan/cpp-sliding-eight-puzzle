@@ -63,7 +63,6 @@ public:
   bool not_empty_board () const;
   bool is_legal_board () const;
   bool not_legal_board () const;
-  bool is_winning_board () const;
   Square& get_empty_square () const;
 
 private:
@@ -72,7 +71,6 @@ private:
   std::array<Square, 9> squares;
 
   // helper methods
-  SquareVal map_square_val (const char&) const;
   InitStatus check_input_str (const std::string&) const;
   InitStatus init_board_from_input_str (const std::string&);
 
