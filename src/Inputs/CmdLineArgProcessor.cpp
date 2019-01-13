@@ -67,10 +67,12 @@ void CmdLineArgProcessor::process_options (int argc, char* const* argv) {
 }
 
 void CmdLineArgProcessor::process_non_option_args (int argc, char* const* argv) {
-  if ((argc - optind) != 1)
-    CmdLineArgProcessor::print_err_msg("missing <board_str> argument");
-  else
-    std::cout << "BOARD_STR: " << argv[optind] << std::endl;
+  if ((argc - optind) != 2) {
+    CmdLineArgProcessor::print_err_msg("missing non-option argument");
+  } else {
+    std::cout << "<start_board>: " << argv[optind] << std::endl;
+    std::cout << "<goal_board>: " << argv[optind + 1] << std::endl;
+  }
 }
 
 void CmdLineArgProcessor::process_opt (int opt) {
@@ -128,10 +130,13 @@ void CmdLineArgProcessor::handle_help (int exit_code) {
   std::cout << "  " << CmdLineArgProcessor::program_name << "  "
             << "-h" << std::endl;
   std::cout << "  " << CmdLineArgProcessor::program_name << "  "
-            << "[-b|-d|-i|-u|-s|-1|-2|-3]  [-m <num>]  <board_str>" << std::endl;
+            << "[-b|-d|-i|-u|-s|-1|-2|-3]  [-m <num>]" << std::endl << "          "
+            << "<start_board>  <goal_board>" << std::endl;
   std::cout << "ARGUMENTS" << std::endl;
-  std::cout << "  " << "<board_str>" << std::endl << "      "
-            << "starting board: a 3x3 with 0-8 (0 is empty), e.g. \"123804765\"" << std::endl;
+  std::cout << "  " << "<start_board>" << std::endl << "      "
+            << "starting board: a 3x3 with 0-8 (0 is empty), e.g. \"134862705\"" << std::endl;
+  std::cout << "  " << "<goal_board>" << std::endl << "      "
+            << "winning/goal board: a 3x3 with 0-8 (0 is empty), e.g. \"123804765\"" << std::endl;
   std::cout << "OPTIONS" << std::endl;
   std::cout << "  " << "-h, --help" << std::endl << "      "
             << "print this help message" << std::endl;
