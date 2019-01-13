@@ -40,6 +40,7 @@ uint8_t Square::get_val () const {
 
 void Square::set_val (uint8_t in_val) {
   this->val = in_val;
+  assert(this->val <= 8);
 }
 
 bool Square::is_empty () const {
