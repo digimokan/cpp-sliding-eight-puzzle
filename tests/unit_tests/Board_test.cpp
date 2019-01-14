@@ -39,6 +39,22 @@ TEST_CASE("initialize board") {
 
 }
 
+TEST_CASE("construct board") {
+
+  Board inited_board{};
+  inited_board.initialize("012345678");
+
+  SUBCASE("construct lval board") {
+    Board cboard{ "012345678" };
+    CHECK_UNARY(cboard == inited_board);
+  }
+
+  SUBCASE("construct rval board") {
+    CHECK_UNARY(inited_board == Board{"012345678"});
+  }
+
+}
+
 TEST_CASE("assignment and equality") {
 
   Board a{};

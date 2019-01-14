@@ -30,6 +30,10 @@ purpose:  a 3x3 eight-puzzle board of Square objects
 Board::Board ()
   : squares{} { }
 
+Board::Board (const std::string& input_str) {
+  this->initialize(input_str);
+}
+
 /*******************************************************************************
 * OPERATORS
 *******************************************************************************/

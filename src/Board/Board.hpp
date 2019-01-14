@@ -47,6 +47,7 @@ public:
 
   // constructors
   Board ();
+  Board (const std::string&);
 
   // destructor
   ~Board () = default;
