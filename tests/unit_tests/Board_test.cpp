@@ -39,3 +39,36 @@ TEST_CASE("initialize board") {
 
 }
 
+TEST_CASE("assignment and equality") {
+
+  Board a{};
+  a.initialize("012345678");
+  Board a_dup{};
+  a_dup.initialize("012345678");
+  Board b{};
+  b.initialize("876543210");
+  Board b_dup{};
+  b_dup.initialize("876543210");
+
+  SUBCASE("equality") {
+    CHECK_UNARY(a == a_dup);
+    CHECK_UNARY(a != b);
+    CHECK_UNARY_FALSE(a == b);
+  }
+
+  SUBCASE("copy assignment") {
+    a = b;
+    CHECK_UNARY(a == b);
+    CHECK_UNARY(a == b_dup);
+    CHECK_UNARY(a != a_dup);
+  }
+
+  SUBCASE("copy construct") {
+    Board acp{a};
+    CHECK_UNARY(acp == a);
+    CHECK_UNARY(acp == a_dup);
+    CHECK_UNARY(a == a_dup);
+  }
+
+}
+

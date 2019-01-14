@@ -31,6 +31,22 @@ Board::Board ()
   : squares{} { }
 
 /*******************************************************************************
+* OPERATORS
+*******************************************************************************/
+
+bool Board::operator== (const Board& rh) {
+  for (size_t i = 0; i < this->squares.size(); i++) {
+    if (this->squares.at(i) != rh.squares.at(i))
+      return false;
+  }
+  return true;
+}
+
+bool Board::operator!= (const Board& rh) {
+  return (! (*this == rh));
+}
+
+/*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
 

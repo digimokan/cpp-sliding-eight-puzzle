@@ -34,6 +34,8 @@ public:
   Square& operator= (const Square& rh) = default;
   Square (Square&& in) = default;
   Square& operator= (Square&& rh) = default;
+  bool operator== (const Square& rh);
+  bool operator!= (const Square& rh);
 
   // specialized methods
   uint8_t get_val () const;

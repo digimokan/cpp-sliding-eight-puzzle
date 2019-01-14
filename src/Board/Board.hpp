@@ -56,6 +56,8 @@ public:
   Board& operator= (const Board& rh) = default;
   Board (Board&& in) = default;
   Board& operator= (Board&& rh) = default;
+  bool operator== (const Board& rh);
+  bool operator!= (const Board& rh);
 
   // specialized methods
   InitStatus initialize (const std::string&);
