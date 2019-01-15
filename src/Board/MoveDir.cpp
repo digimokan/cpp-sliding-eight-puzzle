@@ -5,8 +5,11 @@ date:     13 JAN 2019
 purpose:  a possible direction to move the empty (0) square of a board
 *******************************************************************************/
 
-#ifndef MOVE_DIR_HPP
-#define MOVE_DIR_HPP 1
+/*******************************************************************************
+* USER INCLUDES
+*******************************************************************************/
+
+#include "MoveDir.hpp"
 
 /*******************************************************************************
 * SYSTEM INCLUDES
@@ -15,23 +18,24 @@ purpose:  a possible direction to move the empty (0) square of a board
 #include <iostream>
 
 /*******************************************************************************
-* INTERFACE
+* SPECIALIZED METHODS
 *******************************************************************************/
 
-// types
-enum class MoveDir {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
-};
-
-// specialized methods
-std::ostream& operator<< (std::ostream&, const MoveDir&);
-
-/*******************************************************************************
-* END
-*******************************************************************************/
-
-#endif // MOVE_DIR_HPP
+std::ostream& operator<< (std::ostream& os, const MoveDir& move_dir) {
+  switch (move_dir) {
+    case MoveDir::UP:
+      os << "UP";
+      break;
+    case MoveDir::DOWN:
+      os << "DOWN";
+      break;
+    case MoveDir::LEFT:
+      os << "LEFT";
+      break;
+    case MoveDir::RIGHT:
+      os << "RIGHT";
+      break;
+  }
+   return os;
+}
 
