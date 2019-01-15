@@ -3,6 +3,10 @@ module:   Board
 author:   digimokan
 date:     11 JAN 2019
 purpose:  a 3x3 eight-puzzle board of Square objects
+          board positions as follows:
+                0 1 2
+                3 4 5
+                6 7 8
 *******************************************************************************/
 
 #ifndef BOARD_HPP
@@ -13,13 +17,15 @@ purpose:  a 3x3 eight-puzzle board of Square objects
 *******************************************************************************/
 
 #include <array>
+#include <cstdint>
+#include <iostream>
 #include <string>
 
 /*******************************************************************************
-* USER INCLUDES
+* FORWARD DECLARES
 *******************************************************************************/
 
-#include "Square.hpp"
+enum class MoveDir;
 
 /*******************************************************************************
 * INTERFACE
@@ -47,7 +53,7 @@ public:
 
   // constructors
   Board ();
-  Board (const std::string&);
+  explicit Board (const std::string&);
 
   // destructor
   ~Board () = default;
@@ -66,12 +72,18 @@ public:
   bool not_empty_board () const;
   bool is_legal_board () const;
   bool not_legal_board () const;
-  Square& get_empty_square () const;
+  size_t get_empty_square_pos () const;
+  uint8_t get_square_val (size_t board_pos) const;
+  size_t get_swap_pos (MoveDir) const;
+  void swap_squares (size_t pos_one, size_t pos_two);
+
+  // friend class methods
+  friend std::ostream& operator<< (std::ostream&, const Board&);
 
 private:
 
   // fields
-  std::array<Square, 9> squares;
+  std::array<uint8_t, 9> squares;
 
   // helper methods
   InitStatus check_input_str (const std::string&) const;
