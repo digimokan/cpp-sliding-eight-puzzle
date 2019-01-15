@@ -21,6 +21,21 @@ Move::Move (Board new_board, MoveDir move_dir, unsigned int cost)
   : new_board{new_board}, move_dir{move_dir}, cost{cost} { }
 
 /*******************************************************************************
+* OPERATORS
+*******************************************************************************/
+
+bool Move::operator== (const Move& rh) {
+  bool boards_equal{ this->new_board == rh.new_board };
+  bool move_dirs_equal{ this->move_dir == rh.move_dir };
+  bool costs_equal{ this->cost == rh.cost };
+  return (boards_equal && move_dirs_equal && costs_equal);
+}
+
+bool Move::operator!= (const Move& rh) {
+  return (! (*this == rh));
+}
+
+/*******************************************************************************
 * GET/SET METHODS
 *******************************************************************************/
 

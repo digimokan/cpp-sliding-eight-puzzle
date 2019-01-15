@@ -33,13 +33,15 @@ public:
   Move (Board, MoveDir, unsigned int);
 
   // destructor
-  ~Move ();
+  ~Move () = default;
 
   // operators
   Move (const Move& in) = delete;
   Move& operator= (const Move& rh) = delete;
   Move (Move&& in) = delete;
   Move& operator= (Move&& rh) = delete;
+  bool operator== (const Move& rh);
+  bool operator!= (const Move& rh);
 
   // get/set methods
   Board get_board () const;
