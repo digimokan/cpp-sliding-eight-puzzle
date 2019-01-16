@@ -11,6 +11,7 @@ purpose:  a node in a search tree, comprising these elements:
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <algorithm>
 #include <cstddef>
 #include <list>
 #include <memory>
@@ -32,6 +33,7 @@ purpose:  a node in a search tree, comprising these elements:
 SearchNode::SearchNode (const Move& move, const std::shared_ptr<SearchNode>& in_parent)
   : parent{in_parent},
     depth{in_parent->get_depth() + 1},
+    height{0},
     board{move.get_board()},
     move_dir{move.get_move_dir()},
     move_cost{move.get_cost()},
@@ -41,6 +43,7 @@ SearchNode::SearchNode (const Move& move, const std::shared_ptr<SearchNode>& in_
 SearchNode::SearchNode (const Board& board)
   : parent{std::nullopt},
     depth{0},
+    height{0},
     board{board},
     move_dir{std::nullopt},
     move_cost{0},
@@ -57,6 +60,16 @@ std::optional<std::shared_ptr<SearchNode>> SearchNode::get_parent () const {
 
 size_t SearchNode::get_depth () const {
   return this->depth;
+}
+
+size_t SearchNode::get_height () const {
+  return this->height;
+}
+
+void SearchNode::update_height (size_t new_child_height) {
+  this->height = std::max(new_child_height + 1, this->height);
+  if (this->parent.has_value())
+    this->parent.value()->update_height(this->height);
 }
 
 Board SearchNode::get_board () const {
@@ -81,6 +94,7 @@ unsigned int SearchNode::get_path_cost () const {
 
 void SearchNode::add_child (const std::shared_ptr<SearchNode>& child) {
   this->children.push_back(child);
+  this->update_height(child->get_height());
 }
 
 bool SearchNode::is_root () const {

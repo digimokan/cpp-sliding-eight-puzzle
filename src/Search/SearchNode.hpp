@@ -57,6 +57,8 @@ public:
   // get/set methods
   std::optional<std::shared_ptr<SearchNode>> get_parent () const;
   size_t get_depth () const;
+  size_t get_height () const;
+  void update_height (size_t new_child_height);
   Board get_board () const;
   std::optional<MoveDir> get_move_dir () const;
   unsigned int get_move_cost () const;
@@ -74,6 +76,7 @@ private:
   std::optional<std::shared_ptr<SearchNode>> parent;
   std::list<std::weak_ptr<SearchNode>> children;
   size_t depth;
+  size_t height;
   Board board;
   std::optional<MoveDir> move_dir;
   unsigned int move_cost;

@@ -29,6 +29,7 @@ TEST_CASE("single node creation") {
   SUBCASE("single root-node fields valid") {
     CHECK_UNARY_FALSE(root->get_parent());
     CHECK_EQ(root->get_depth(), 0);
+    CHECK_EQ(root->get_height(), 0);
     CHECK_UNARY(root->get_board() == Board{"012345678"});
     CHECK_UNARY_FALSE(root->get_move_dir());
     CHECK_EQ(root->get_move_cost(), 0);
@@ -51,6 +52,7 @@ TEST_CASE("create tree with three nodes: root/child/grandchild") {
   SUBCASE("root-node fields valid") {
     CHECK_UNARY_FALSE(root->get_parent());
     CHECK_EQ(root->get_depth(), 0);
+    CHECK_EQ(root->get_height(), 2);
     CHECK_UNARY(root->get_board() == Board{"012345678"});
     CHECK_UNARY_FALSE(root->get_move_dir());
     CHECK_EQ(root->get_move_cost(), 0);
@@ -63,6 +65,7 @@ TEST_CASE("create tree with three nodes: root/child/grandchild") {
   SUBCASE("child fields valid") {
     CHECK_EQ(child->get_parent(), root);
     CHECK_EQ(child->get_depth(), 1);
+    CHECK_EQ(child->get_height(), 1);
     CHECK_UNARY(child->get_board() == Board{"102345678"});
     CHECK_EQ(child->get_move_dir(), MoveDir::RIGHT);
     CHECK_EQ(child->get_move_cost(), 1);
@@ -75,6 +78,7 @@ TEST_CASE("create tree with three nodes: root/child/grandchild") {
   SUBCASE("grandchild fields valid") {
     CHECK_EQ(grandchild->get_parent(), child);
     CHECK_EQ(grandchild->get_depth(), 2);
+    CHECK_EQ(grandchild->get_height(), 0);
     CHECK_UNARY(grandchild->get_board() == Board{"120345678"});
     CHECK_EQ(grandchild->get_move_dir(), MoveDir::RIGHT);
     CHECK_EQ(grandchild->get_move_cost(), 2);
