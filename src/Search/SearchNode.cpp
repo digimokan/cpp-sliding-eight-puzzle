@@ -66,10 +66,11 @@ size_t SearchNode::get_height () const {
   return this->height;
 }
 
-void SearchNode::update_height (size_t new_child_height) {
-  this->height = std::max(new_child_height + 1, this->height);
+void SearchNode::update_height () {
+  for (const auto& child : this->children)
+    this->height = std::max(this->height, child.lock()->get_height() + 1);
   if (this->parent.has_value())
-    this->parent.value()->update_height(this->height);
+    this->parent.value()->update_height();
 }
 
 Board SearchNode::get_board () const {
@@ -94,7 +95,7 @@ unsigned int SearchNode::get_path_cost () const {
 
 void SearchNode::add_child (const std::shared_ptr<SearchNode>& child) {
   this->children.push_back(child);
-  this->update_height(child->get_height());
+  this->update_height();
 }
 
 bool SearchNode::is_root () const {

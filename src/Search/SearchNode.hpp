@@ -58,7 +58,7 @@ public:
   std::optional<std::shared_ptr<SearchNode>> get_parent () const;
   size_t get_depth () const;
   size_t get_height () const;
-  void update_height (size_t new_child_height);
+  void update_height ();
   Board get_board () const;
   std::optional<MoveDir> get_move_dir () const;
   unsigned int get_move_cost () const;
