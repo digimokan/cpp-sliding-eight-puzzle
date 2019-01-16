@@ -30,7 +30,7 @@ public:
 
   // constructors
   Move () = delete;
-  Move (Board, MoveDir, unsigned int);
+  Move (Board board, MoveDir move_dir, unsigned int cost);
 
   // destructor
   ~Move () = default;
