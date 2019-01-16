@@ -193,3 +193,66 @@ TEST_CASE("create multi-branch, multi-level tree") {
 
 }
 
+TEST_CASE("remove nodes in multi-branch, multi-level tree") {
+/*******************************************************************************
+        A
+      / |
+     B  C
+       / \
+      D  E
+      |
+      F
+*******************************************************************************/
+
+  std::shared_ptr<SearchNode> A{ std::make_shared<SearchNode>(Board{"012345678"}) };
+  std::shared_ptr<SearchNode> B{ std::make_shared<SearchNode>(Move{Board{"102345678"}, MoveDir::RIGHT, 1}, A) };
+  std::shared_ptr<SearchNode> C{ std::make_shared<SearchNode>(Move{Board{"312045678"}, MoveDir::DOWN, 3}, A) };
+  std::shared_ptr<SearchNode> D{ std::make_shared<SearchNode>(Move{Board{"312405678"}, MoveDir::RIGHT, 4}, C) };
+  std::shared_ptr<SearchNode> E{ std::make_shared<SearchNode>(Move{Board{"312645078"}, MoveDir::DOWN, 6}, C) };
+  std::shared_ptr<SearchNode> F{ std::make_shared<SearchNode>(Move{Board{"302415678"}, MoveDir::UP, 1}, D) };
+  A->add_child(B);
+  A->add_child(C);
+  C->add_child(D);
+  C->add_child(E);
+  D->add_child(F);
+
+  SUBCASE("remove node F") {
+    D->remove_child(F);
+    CHECK_EQ(D->get_depth(), 2);
+    CHECK_EQ(A->get_height(), 2);
+    CHECK_EQ(D->get_path_cost(), 7);
+    CHECK_UNARY(C->has_children());
+    CHECK_UNARY_FALSE(D->has_children());
+    CHECK_UNARY(D->is_leaf());
+  }
+
+  SUBCASE("remove node D") {
+    C->remove_child(D);
+    CHECK_EQ(C->get_depth(), 1);
+    CHECK_EQ(A->get_height(), 2);
+    CHECK_EQ(E->get_path_cost(), 9);
+    CHECK_UNARY(C->has_children());
+    CHECK_UNARY_FALSE(E->has_children());
+    CHECK_UNARY(E->is_leaf());
+  }
+
+  SUBCASE("remove node C") {
+    A->remove_child(C);
+    CHECK_EQ(B->get_depth(), 1);
+    CHECK_EQ(A->get_height(), 1);
+    CHECK_EQ(B->get_path_cost(), 1);
+    CHECK_UNARY(A->has_children());
+    CHECK_UNARY_FALSE(B->has_children());
+    CHECK_UNARY(B->is_leaf());
+  }
+
+  SUBCASE("remove node B") {
+    A->remove_child(B);
+    CHECK_EQ(F->get_depth(), 3);
+    CHECK_EQ(A->get_height(), 3);
+    CHECK_EQ(F->get_path_cost(), 8);
+    CHECK_UNARY(A->has_children());
+  }
+
+}
+

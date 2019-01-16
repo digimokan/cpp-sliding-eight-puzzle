@@ -56,6 +56,7 @@ public:
 
   // get/set methods
   std::optional<std::shared_ptr<SearchNode>> get_parent () const;
+  void set_parent (std::optional<std::shared_ptr<SearchNode>>);
   size_t get_depth () const;
   size_t get_height () const;
   void update_height ();
@@ -66,6 +67,7 @@ public:
 
   // specialized methods
   void add_child (const std::shared_ptr<SearchNode>& child);
+  void remove_child (const std::weak_ptr<SearchNode>& child);
   bool is_root () const;
   bool has_children () const;
   bool is_leaf () const;

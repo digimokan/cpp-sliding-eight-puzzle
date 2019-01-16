@@ -13,6 +13,7 @@ purpose:  a node in a search tree, comprising these elements:
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <list>
 #include <memory>
 #include <optional>
@@ -58,6 +59,10 @@ std::optional<std::shared_ptr<SearchNode>> SearchNode::get_parent () const {
   return this->parent;
 }
 
+void SearchNode::set_parent (std::optional<std::shared_ptr<SearchNode>> in_parent) {
+  this->parent = std::move(in_parent);
+}
+
 size_t SearchNode::get_depth () const {
   return this->depth;
 }
@@ -67,6 +72,7 @@ size_t SearchNode::get_height () const {
 }
 
 void SearchNode::update_height () {
+  this->height = 0;
   for (const auto& child : this->children)
     this->height = std::max(this->height, child.lock()->get_height() + 1);
   if (this->parent.has_value())
@@ -95,6 +101,15 @@ unsigned int SearchNode::get_path_cost () const {
 
 void SearchNode::add_child (const std::shared_ptr<SearchNode>& child) {
   this->children.push_back(child);
+  this->update_height();
+}
+
+void SearchNode::remove_child (const std::weak_ptr<SearchNode>& child) {
+  child.lock()->set_parent(std::nullopt);
+  auto rem_child{ [child] (std::weak_ptr<SearchNode> c) {
+    return !(c.owner_before(child) || child.owner_before(c));
+  } };
+  this->children.remove_if(rem_child);
   this->update_height();
 }
 
