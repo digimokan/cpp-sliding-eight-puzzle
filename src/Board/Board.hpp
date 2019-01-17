@@ -67,6 +67,7 @@ public:
   bool operator!= (const Board& rh);
 
   // specialized methods
+  constexpr size_t get_num_board_squares () const { return this->squares.size(); }
   InitStatus initialize (const std::string&);
   bool is_empty_board () const;
   bool not_empty_board () const;
