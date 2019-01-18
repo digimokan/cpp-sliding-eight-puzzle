@@ -1,8 +1,8 @@
 /*******************************************************************************
-module:   MoveCostUniform
+module:   MoveCostConst
 author:   digimokan
 date:     13 JAN 2019
-purpose:  uniform move cost (all moves cost 1, regardless of square values)
+purpose:  constant move cost (all moves cost 1, regardless of square values)
 *******************************************************************************/
 
 #ifndef MOVE_COST_UNIFORM_HPP
@@ -25,21 +25,21 @@ enum class MoveDir;
 * INTERFACE
 *******************************************************************************/
 
-class MoveCostUniform : public MoveCostIface {
+class MoveCostConst : public MoveCostIface {
 
 public:
 
   // constructors
-  MoveCostUniform () = default;
+  MoveCostConst () = default;
 
   // destructor
-  ~MoveCostUniform () override = default;
+  ~MoveCostConst () override = default;
 
   // operators
-  MoveCostUniform (const MoveCostUniform& in) = default;
-  MoveCostUniform& operator= (const MoveCostUniform& rh) = default;
-  MoveCostUniform (MoveCostUniform&& in) = default;
-  MoveCostUniform& operator= (MoveCostUniform&& rh) = default;
+  MoveCostConst (const MoveCostConst& in) = default;
+  MoveCostConst& operator= (const MoveCostConst& rh) = default;
+  MoveCostConst (MoveCostConst&& in) = default;
+  MoveCostConst& operator= (MoveCostConst&& rh) = default;
 
   // base / derived methods
   unsigned int calc_cost (const Board& board, MoveDir move_dir) override;

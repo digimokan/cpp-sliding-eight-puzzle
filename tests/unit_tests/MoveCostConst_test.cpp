@@ -15,7 +15,7 @@
 *******************************************************************************/
 
 #include "Board.hpp"
-#include "MoveCostUniform.hpp"
+#include "MoveCostConst.hpp"
 #include "MoveDir.hpp"
 
 /*******************************************************************************
@@ -24,7 +24,7 @@
 
 TEST_CASE("calc move cost") {
 
-  std::shared_ptr<MoveCostIface> uniform{ std::make_shared<MoveCostUniform>() };
+  std::shared_ptr<MoveCostIface> uniform{ std::make_shared<MoveCostConst>() };
   Board board{ "012345678" };
 
   SUBCASE("calc cost of move down") {
