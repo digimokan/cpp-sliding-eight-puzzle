@@ -1,30 +1,28 @@
 /*******************************************************************************
-* DOCTEST CONFIG
+module:   EstGoalCostUniform
+author:   digimokan
+date:     17 JAN 2019
+purpose:  uninformed strategy: est-cost-to-reach-goal = path cost to curr node
 *******************************************************************************/
 
-#include "doctest.h"
+/*******************************************************************************
+* SYSTEM INCLUDES
+*******************************************************************************/
+
+#include <memory>
 
 /*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
-#include "Board.hpp"
-#include "EstGoalCostConst.hpp"
+#include "EstGoalCostUniform.hpp"
 #include "SearchNode.hpp"
 
 /*******************************************************************************
-* TEST CASES
+* BASE / DERIVED METHODS
 *******************************************************************************/
 
-TEST_CASE("get_est_goal_cost()") {
-
-  EstGoalCostConst est{};
-
-  SUBCASE("diff boards all return cost of 1") {
-    CHECK_EQ(est.get_est_goal_cost(std::make_shared<SearchNode>(Board{ "012345678" })), 1);
-    CHECK_EQ(est.get_est_goal_cost(std::make_shared<SearchNode>(Board{ "123405678" })), 1);
-    CHECK_EQ(est.get_est_goal_cost(std::make_shared<SearchNode>(Board{ "876543210" })), 1);
-  }
-
+unsigned int EstGoalCostUniform::get_est_goal_cost (std::shared_ptr<SearchNode> node) {
+  return node->get_path_cost();
 }
 
