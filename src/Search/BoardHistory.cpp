@@ -13,7 +13,6 @@ purpose:  a history of a boards that have been visited/processed during search
 #include <cstdint>
 #include <memory>
 #include <unordered_map>
-#include <utility>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -27,16 +26,16 @@ purpose:  a history of a boards that have been visited/processed during search
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-bool BoardHistory::is_in_history (const Board& board) const {
+bool BoardHistory::contains (const Board& board) const {
   return (this->history.count(this->calc_hash_key(board)) != 0);
 }
 
-bool BoardHistory::not_in_history (const Board& board) const {
-  return (! this->is_in_history(board));
+bool BoardHistory::not_contains (const Board& board) const {
+  return (! this->contains(board));
 }
 
-void BoardHistory::add_to_history (Board board, std::shared_ptr<SearchNode> node) {
-  this->history.insert(std::make_pair(this->calc_hash_key(board), node));
+void BoardHistory::add (std::shared_ptr<SearchNode> node) {
+  this->history.insert(std::make_pair(this->calc_hash_key(node->get_board()), node));
 }
 
 unsigned int BoardHistory::get_path_cost (const Board& board) const {

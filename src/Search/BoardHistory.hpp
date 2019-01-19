@@ -49,9 +49,9 @@ public:
   BoardHistory& operator= (BoardHistory&& rh) = delete;
 
   // specialized methods
-  bool is_in_history (const Board&) const;
-  bool not_in_history (const Board&) const;
-  void add_to_history (Board, std::shared_ptr<SearchNode>);
+  bool contains (const Board&) const;
+  bool not_contains (const Board&) const;
+  void add (std::shared_ptr<SearchNode>);
   unsigned int get_path_cost (const Board&) const;
 
 private:
