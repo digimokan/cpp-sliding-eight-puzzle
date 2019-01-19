@@ -24,16 +24,16 @@
 
 TEST_CASE("calc move cost") {
 
-  std::shared_ptr<MoveCostIface> uniform{ std::make_shared<MoveCostConst>() };
+  std::shared_ptr<MoveCostIface> ccost{ std::make_shared<MoveCostConst>() };
   Board board{ "012345678" };
 
   SUBCASE("calc cost of move down") {
-    unsigned int cost{ uniform->calc_cost(board, MoveDir::DOWN) };
+    unsigned int cost{ ccost->calc_cost(board, MoveDir::DOWN) };
     CHECK_EQ(cost, 1);
   }
 
   SUBCASE("calc cost of move right") {
-    unsigned int cost{ uniform->calc_cost(board, MoveDir::RIGHT) };
+    unsigned int cost{ ccost->calc_cost(board, MoveDir::RIGHT) };
     CHECK_EQ(cost, 1);
   }
 
