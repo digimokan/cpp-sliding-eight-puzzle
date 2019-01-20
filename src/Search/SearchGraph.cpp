@@ -11,7 +11,6 @@ purpose:  graph of SearchNodes representing search space
 
 #include <cstddef>
 #include <functional>
-#include <list>
 #include <memory>
 
 /*******************************************************************************
@@ -31,8 +30,9 @@ purpose:  graph of SearchNodes representing search space
 SearchGraph::SearchGraph (std::shared_ptr<SearchNode> root,
       std::shared_ptr<MoveCostIface> move_cost)
   : root{std::move(root)},
-    move_gen{std::make_unique<MoveGenerator>(move_cost)}
-{ }
+    move_gen{std::make_unique<MoveGenerator>(move_cost)} {
+  this->node_set.insert(root);
+}
 
 /*******************************************************************************
 * SPECIALIZED METHODS
@@ -41,11 +41,8 @@ SearchGraph::SearchGraph (std::shared_ptr<SearchNode> root,
 void SearchGraph::expand (const std::shared_ptr<SearchNode>& node,
     const std::function<void(std::shared_ptr<SearchNode>)>& act_on_expanded) {
   std::list<std::shared_ptr<SearchNode>> children;
-  for (const auto& move : this->move_gen->generate_moves(node->get_board())) {
-    auto child{ this->create_child(move, node) };
-    children.push_back(child);
-    act_on_expanded(child);
-  }
+  for (const auto& move : this->move_gen->generate_moves(node->get_board()))
+    act_on_expanded(this->create_child(move, node));
 }
 
 size_t SearchGraph::get_max_depth () const {
@@ -59,6 +56,7 @@ size_t SearchGraph::get_max_depth () const {
 std::shared_ptr<SearchNode> SearchGraph::create_child (const Move& move,
     const std::shared_ptr<SearchNode>& parent) {
   auto child{ std::make_shared<SearchNode>(move, parent) };
+  this->node_set.insert(child);
   parent->add_child(child);
   return child;
 }

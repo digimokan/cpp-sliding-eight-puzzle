@@ -15,6 +15,7 @@ purpose:  graph of SearchNodes representing search space
 #include <cstddef>
 #include <functional>
 #include <memory>
+#include <unordered_set>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -63,6 +64,7 @@ private:
   // fields
   std::shared_ptr<SearchNode> root;
   std::unique_ptr<MoveGenerator> move_gen;
+  std::unordered_set<std::shared_ptr<SearchNode>> node_set;
 
 };
 
