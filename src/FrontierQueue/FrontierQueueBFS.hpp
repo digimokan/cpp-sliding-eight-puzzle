@@ -12,8 +12,8 @@ purpose:  simple BFS FIFO queue with no est-goal-cost strategy
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <list>
 #include <memory>
-#include <queue>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -49,6 +49,7 @@ public:
 
   // base / derived methods
   bool is_empty () const override;
+  bool contains (const Board& board) const override;
   size_t get_current_queue_size () const override;
 
 private:
@@ -58,7 +59,7 @@ private:
   std::shared_ptr<SearchNode> pop_logic () override;
 
   // fields
-  std::queue<std::shared_ptr<SearchNode>> fq;
+  std::list<std::shared_ptr<SearchNode>> fq;
 
 };
 

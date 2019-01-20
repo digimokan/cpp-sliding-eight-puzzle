@@ -34,6 +34,82 @@ TEST_CASE("is_empty()") {
 
 }
 
+TEST_CASE("contains()") {
+
+  Board BA{ Board{"134862705"} };
+  Board BB{ Board{"134802765"} };
+  Board BC{ Board{"134862075"} };
+  Board BD{ Board{"134862750"} };
+  Board BE{ Board{"104832765"} };
+  Board BF{ Board{"134082765"} };
+  auto SNA{ std::make_shared<SearchNode>(BA) };
+  auto SNB{ std::make_shared<SearchNode>(BB) };
+  auto SNC{ std::make_shared<SearchNode>(BC) };
+  auto SND{ std::make_shared<SearchNode>(BD) };
+  auto SNE{ std::make_shared<SearchNode>(BE) };
+  auto SNF{ std::make_shared<SearchNode>(BF) };
+  FrontierQueueBFS q{};
+
+  SUBCASE("empty queue") {
+    CHECK_FALSE(q.contains(BA));
+    CHECK_UNARY(q.not_contains(BA));
+  }
+
+  SUBCASE("one push") {
+    q.push(SNA);
+    CHECK_UNARY(q.contains(BA));
+  }
+
+  SUBCASE("one push, one pop") {
+    q.push(SNA);
+    q.pop();
+    CHECK_FALSE(q.contains(BA));
+  }
+
+  SUBCASE("three pushes") {
+    q.push(SNA);
+    q.push(SNB);
+    q.push(SNC);
+    CHECK_UNARY(q.contains(BA));
+    CHECK_UNARY(q.contains(BB));
+    CHECK_UNARY(q.contains(BC));
+  }
+
+  SUBCASE("three pushes, six pops") {
+    q.push(SNA);
+    q.push(SNB);
+    q.push(SNC);
+    q.push(SND);
+    q.push(SNE);
+    q.push(SNF);
+    q.pop();
+    q.pop();
+    q.pop();
+    CHECK_FALSE(q.contains(BA));
+    CHECK_FALSE(q.contains(BB));
+    CHECK_FALSE(q.contains(BC));
+    CHECK_UNARY(q.contains(BD));
+    CHECK_UNARY(q.contains(BE));
+    CHECK_UNARY(q.contains(BF));
+  }
+
+  SUBCASE("repeated push/pop of same element") {
+    q.push(SNA);
+    CHECK_UNARY(q.contains(BA));
+    q.pop();
+    CHECK_FALSE(q.contains(BA));
+    q.push(SNA);
+    CHECK_UNARY(q.contains(BA));
+    q.pop();
+    CHECK_FALSE(q.contains(BA));
+    q.push(SNA);
+    CHECK_UNARY(q.contains(BA));
+    q.pop();
+    CHECK_FALSE(q.contains(BA));
+  }
+
+}
+
 TEST_CASE("get_current_queue_size()") {
 
   FrontierQueueBFS q{};
