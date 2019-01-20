@@ -17,7 +17,7 @@
 *******************************************************************************/
 
 #include "Board.hpp"
-#include "BoardHistory.hpp"
+#include "BoardMap.hpp"
 #include "Move.hpp"
 #include "MoveCostConst.hpp"
 #include "MoveDir.hpp"
@@ -91,7 +91,7 @@ Level 2:
   Board BR{ Board{"130864752"} };
   Board BS{ Board{"134806752"} };
 
-  BoardHistory history{};
+  BoardMap history{};
   std::shared_ptr<SearchNode> root{ std::make_shared<SearchNode>(BA) };
   SearchGraph graph{ root, std::make_shared<MoveCostConst>() };
   history.add(root);
