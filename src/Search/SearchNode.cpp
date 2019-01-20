@@ -12,6 +12,7 @@ purpose:  a node in a search tree, comprising these elements:
 *******************************************************************************/
 
 #include <algorithm>
+#include <cassert>
 #include <cstddef>
 #include <functional>
 #include <list>
@@ -73,8 +74,10 @@ size_t SearchNode::get_height () const {
 
 void SearchNode::update_height () {
   this->height = 0;
-  for (const auto& child : this->children)
+  for (const auto& child : this->children) {
+    assert(! child.expired());
     this->height = std::max(this->height, child.lock()->get_height() + 1);
+  }
   if (this->parent.has_value())
     this->parent.value()->update_height();
 }
