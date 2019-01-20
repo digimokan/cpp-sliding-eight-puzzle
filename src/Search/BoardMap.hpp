@@ -1,12 +1,12 @@
 /*******************************************************************************
-module:   BoardHistory
+module:   BoardMap
 author:   digimokan
 date:     16 JAN 2019
-purpose:  a history of a boards that have been visited/processed during search
+purpose:  a map of a Boards-->SearchNodes
 *******************************************************************************/
 
-#ifndef BOARD_HISTORY_HPP
-#define BOARD_HISTORY_HPP 1
+#ifndef BOARD_MAP_HPP
+#define BOARD_MAP_HPP 1
 
 /*******************************************************************************
 * SYSTEM INCLUDES
@@ -32,21 +32,21 @@ class Board;
 * INTERFACE
 *******************************************************************************/
 
-class BoardHistory {
+class BoardMap {
 
 public:
 
   // constructors
-  BoardHistory () = default;
+  BoardMap () = default;
 
   // destructor
-  ~BoardHistory () = default;
+  ~BoardMap () = default;
 
   // operators
-  BoardHistory (const BoardHistory& in) = delete;
-  BoardHistory& operator= (const BoardHistory& rh) = delete;
-  BoardHistory (BoardHistory&& in) = delete;
-  BoardHistory& operator= (BoardHistory&& rh) = delete;
+  BoardMap (const BoardMap& in) = delete;
+  BoardMap& operator= (const BoardMap& rh) = delete;
+  BoardMap (BoardMap&& in) = delete;
+  BoardMap& operator= (BoardMap&& rh) = delete;
 
   // specialized methods
   bool contains (const Board&) const;
@@ -59,7 +59,7 @@ public:
 private:
 
   // fields
-  std::unordered_map<uint64_t, std::shared_ptr<SearchNode>> history;
+  std::unordered_map<uint64_t, std::shared_ptr<SearchNode>> map;
 
   // helper methods
   uint64_t calc_hash_key (const Board&) const;
@@ -70,5 +70,5 @@ private:
 * END
 *******************************************************************************/
 
-#endif // BOARD_HISTORY_HPP
+#endif // BOARD_MAP_HPP
 
