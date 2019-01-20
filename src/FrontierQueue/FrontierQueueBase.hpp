@@ -51,7 +51,9 @@ public:
   void push (std::shared_ptr<SearchNode> node) final;
   std::shared_ptr<SearchNode> pop () final;
   bool not_empty () const final;
+  bool not_contains (const Board& board) const final;
   bool is_empty () const override = 0;
+  bool contains (const Board& board) const override = 0;
   size_t get_current_queue_size () const override = 0;
 
 protected:

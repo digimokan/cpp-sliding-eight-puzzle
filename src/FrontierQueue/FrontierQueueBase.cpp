@@ -56,3 +56,7 @@ bool FrontierQueueBase::not_empty () const {
   return (! this->is_empty());
 }
 
+bool FrontierQueueBase::not_contains (const Board& board) const {
+  return (! this->contains(board));
+}
+

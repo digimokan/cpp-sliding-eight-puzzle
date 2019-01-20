@@ -20,6 +20,7 @@ purpose:  interface for a "frontier queue" of a search graph
 * FORWARD DECLARES
 *******************************************************************************/
 
+class Board;
 class SearchNode;
 
 /*******************************************************************************
@@ -42,6 +43,8 @@ public:
   // base / derived methods
   virtual void push (std::shared_ptr<SearchNode>) = 0;
   virtual std::shared_ptr<SearchNode> pop () = 0;
+  virtual bool contains (const Board&) const = 0;
+  virtual bool not_contains (const Board&) const = 0;
   virtual bool is_empty () const = 0;
   virtual bool not_empty () const = 0;
   virtual size_t get_current_queue_size () const = 0;
