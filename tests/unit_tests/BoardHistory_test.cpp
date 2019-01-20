@@ -62,6 +62,40 @@ TEST_CASE("add(Board)") {
 
 }
 
+TEST_CASE("size()") {
+
+  BoardHistory history{};
+  Board B1{ "123405678" };
+  Board B2{ "876543210" };
+  Board B3{ "765483210" };
+  std::shared_ptr<SearchNode> SNA{ std::make_shared<SearchNode>(B1) };
+  std::shared_ptr<SearchNode> SNB{ std::make_shared<SearchNode>(Move{B2, MoveDir::RIGHT, 1}, SNA) };
+  std::shared_ptr<SearchNode> SNC{ std::make_shared<SearchNode>(Move{B3, MoveDir::DOWN, 3}, SNA) };
+
+  SUBCASE("empty history") {
+    CHECK_EQ(history.get_size(), 0);
+  }
+
+  SUBCASE("history of 1") {
+    history.add(SNA);
+    CHECK_EQ(history.get_size(), 1);
+  }
+
+  SUBCASE("history of 2") {
+    history.add(SNA);
+    history.add(SNB);
+    CHECK_EQ(history.get_size(), 2);
+  }
+
+  SUBCASE("history of 3") {
+    history.add(SNA);
+    history.add(SNB);
+    history.add(SNC);
+    CHECK_EQ(history.get_size(), 3);
+  }
+
+}
+
 TEST_CASE("get_path_cost(Board)") {
 
   BoardHistory history{};
