@@ -38,6 +38,10 @@ void BoardHistory::add (std::shared_ptr<SearchNode> node) {
   this->history.insert(std::make_pair(this->calc_hash_key(node->get_board()), node));
 }
 
+void BoardHistory::remove (const std::shared_ptr<SearchNode>& node) {
+  this->history.erase(this->calc_hash_key(node->get_board()));
+}
+
 size_t BoardHistory::get_size () const {
   return this->history.size();
 }
