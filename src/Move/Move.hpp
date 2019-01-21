@@ -51,9 +51,9 @@ public:
 private:
 
   // fields
-  Board new_board;
-  MoveDir move_dir;
-  unsigned int cost;
+  const Board new_board;
+  const MoveDir move_dir;
+  const unsigned int cost;
 
 };
 
