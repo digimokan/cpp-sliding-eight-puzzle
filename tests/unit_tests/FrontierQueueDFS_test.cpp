@@ -43,8 +43,11 @@ TEST_CASE("contains()") {
   Board BE{ Board{"104832765"} };
   Board BF{ Board{"134082765"} };
   auto SNA{ std::make_shared<SearchNode>(BA) };
+  auto SNA_dup{ std::make_shared<SearchNode>(BA) };
   auto SNB{ std::make_shared<SearchNode>(BB) };
+  auto SNB_dup{ std::make_shared<SearchNode>(BB) };
   auto SNC{ std::make_shared<SearchNode>(BC) };
+  auto SNC_dup{ std::make_shared<SearchNode>(BC) };
   auto SND{ std::make_shared<SearchNode>(BD) };
   auto SNE{ std::make_shared<SearchNode>(BE) };
   auto SNF{ std::make_shared<SearchNode>(BF) };
@@ -106,6 +109,15 @@ TEST_CASE("contains()") {
     CHECK_UNARY(q.contains(BA));
     q.pop();
     CHECK_FALSE(q.contains(BA));
+  }
+
+  SUBCASE("nodes with duplicate boards") {
+    q.push(SNA);
+    q.push(SNB);
+    q.push(SNC);
+    CHECK_UNARY(q.contains(SNA_dup->get_board()));
+    CHECK_UNARY(q.contains(SNB_dup->get_board()));
+    CHECK_UNARY(q.contains(SNC_dup->get_board()));
   }
 
 }
