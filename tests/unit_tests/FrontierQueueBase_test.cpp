@@ -17,11 +17,12 @@
 * MOCKS
 *******************************************************************************/
 
-class TestQueue: public FrontierQueueBase {
+class FQBaseMock: public FrontierQueueBase {
 public:
-  TestQueue () : queue_size{0} { }
+  FQBaseMock () : queue_size{0} { }
   bool is_empty () const override { return true; }
   bool contains (const Board& board) const override { MARK_AS_USED(board); return true; }
+  std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const override { MARK_AS_USED(board); return std::nullopt; }
   size_t get_current_queue_size () const override { return queue_size; }
 private:
   void push_logic (std::shared_ptr<SearchNode> node) override { MARK_AS_USED(node); this->queue_size++; }
@@ -35,7 +36,7 @@ private:
 
 TEST_CASE("not_empty()") {
 
-  TestQueue tq{};
+  FQBaseMock tq{};
 
   SUBCASE("not_empty() returns opposite of is_empty()") {
     CHECK_NE(tq.is_empty(), tq.not_empty());
@@ -45,7 +46,7 @@ TEST_CASE("not_empty()") {
 
 TEST_CASE("not_contains()") {
 
-  TestQueue tq{};
+  FQBaseMock tq{};
 
   SUBCASE("not_contains() returns opposite of contains()") {
     CHECK_NE(tq.contains(Board{"01234567"}), tq.not_contains(Board{"01234567"}));
@@ -55,7 +56,7 @@ TEST_CASE("not_contains()") {
 
 TEST_CASE("get_largest_queue_size()") {
 
-  TestQueue tq{};
+  FQBaseMock tq{};
 
   SUBCASE("after pushing 4, removing 3, adding 1") {
     tq.push(std::make_shared<SearchNode>(Board{ "123405678" }));
@@ -73,7 +74,7 @@ TEST_CASE("get_largest_queue_size()") {
 
 TEST_CASE("get_num_nodes_popped()") {
 
-  TestQueue tq{};
+  FQBaseMock tq{};
 
   SUBCASE("after pushing 4, removing 2, adding 1, removing 1") {
     tq.push(std::make_shared<SearchNode>(Board{ "123405678" }));
