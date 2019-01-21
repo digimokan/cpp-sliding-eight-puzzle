@@ -33,6 +33,10 @@ TEST_CASE("graph with root only") {
   std::shared_ptr<SearchNode> root{ std::make_shared<SearchNode>(Board{"012345678"}) };
   SearchGraph graph{ root, std::make_shared<MoveCostConst>() };
 
+  SUBCASE("get_root()") {
+    CHECK_EQ(graph.get_root(), root);
+  }
+
   SUBCASE("max_depth of 0") {
     CHECK_EQ(graph.get_max_depth(), 0);
   }
@@ -51,6 +55,7 @@ TEST_CASE("graph of depth 1") {
       CHECK_UNARY(node->get_parent().value()->get_board() == BA);
     };
     graph.expand(SNA, verify_parent);
+    CHECK_EQ(graph.get_root(), SNA);
     CHECK_EQ(graph.get_max_depth(), 1);
   }
 
@@ -101,6 +106,7 @@ Level 2:
       history.add(node);
     };
     graph.expand(root, exp_level_0);
+    CHECK_EQ(graph.get_root(), root);
     CHECK_EQ(graph.get_max_depth(), 1);
     CHECK_EQ(history.get_size(), 4);
     CHECK_UNARY(history.contains(BA));
@@ -123,6 +129,7 @@ Level 2:
     graph.expand(root, exp_level_0);
     for (const auto& node: level_1_nodes)
       graph.expand(node, exp_level_1);
+    CHECK_EQ(graph.get_root(), root);
     CHECK_EQ(graph.get_max_depth(), 2);
     CHECK_EQ(history.get_size(), 9);
     CHECK_UNARY(history.contains(BA));
@@ -163,6 +170,7 @@ Level 2:
     for (const auto& node: level_2_nodes) {
       graph.expand(node, exp_level_2);
     }
+    CHECK_EQ(graph.get_root(), root);
     CHECK_EQ(graph.get_max_depth(), 3);
     CHECK_EQ(history.get_size(), 19);
     CHECK_EQ(level_1_nodes.size(), 3);

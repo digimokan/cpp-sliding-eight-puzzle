@@ -53,6 +53,7 @@ public:
   SearchGraph& operator= (SearchGraph&& rh) = delete;
 
   // specialized methods
+  std::shared_ptr<SearchNode> get_root () const;
   void expand (const std::shared_ptr<SearchNode>& node, const std::function<void(std::shared_ptr<SearchNode>)>& act_on_expanded);
   size_t get_max_depth () const;
 

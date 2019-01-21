@@ -38,6 +38,10 @@ SearchGraph::SearchGraph (std::shared_ptr<SearchNode> root,
 * SPECIALIZED METHODS
 *******************************************************************************/
 
+std::shared_ptr<SearchNode> SearchGraph::get_root () const {
+  return this->root;
+}
+
 void SearchGraph::expand (const std::shared_ptr<SearchNode>& node,
     const std::function<void(std::shared_ptr<SearchNode>)>& act_on_expanded) {
   std::list<std::shared_ptr<SearchNode>> children;
