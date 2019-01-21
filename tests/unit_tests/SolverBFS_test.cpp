@@ -60,11 +60,11 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 0);
+    CHECK_EQ(solution.value().get_time_complexity(), 1);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.value().get_space_complexity(), 0);
+    CHECK_EQ(solution.value().get_space_complexity(), 1);
   }
 
 }
@@ -104,7 +104,7 @@ TEST_CASE("2-step solution") {
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 1);
+    CHECK_EQ(solution.value().get_time_complexity(), 2);
   }
 
   SUBCASE("get_space_complexity()") {
@@ -149,7 +149,7 @@ TEST_CASE("3-step solution") {
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 5);
+    CHECK_EQ(solution.value().get_time_complexity(), 6);
   }
 
   SUBCASE("get_space_complexity()") {
@@ -201,7 +201,7 @@ TEST_CASE("6-step \"easy\" solution") {
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 24);
+    CHECK_EQ(solution.value().get_time_complexity(), 25);
   }
 
   SUBCASE("get_space_complexity()") {
