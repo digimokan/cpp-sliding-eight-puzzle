@@ -16,6 +16,15 @@
 TEST_CASE("contains(Board), not_contains(Board)") {
 
   BoardMap map{};
+  Board B1{ "123405678" };
+  Board B2{ "876543210" };
+  Board B3{ "765483210" };
+  std::shared_ptr<SearchNode> SNA{ std::make_shared<SearchNode>(B1) };
+  std::shared_ptr<SearchNode> SNA_dup{ std::make_shared<SearchNode>(B1) };
+  std::shared_ptr<SearchNode> SNB{ std::make_shared<SearchNode>(Move{B2, MoveDir::RIGHT, 1}, SNA) };
+  std::shared_ptr<SearchNode> SNB_dup{ std::make_shared<SearchNode>(Move{B2, MoveDir::RIGHT, 1}, SNA) };
+  std::shared_ptr<SearchNode> SNC{ std::make_shared<SearchNode>(Move{B3, MoveDir::DOWN, 3}, SNA) };
+  std::shared_ptr<SearchNode> SNC_dup{ std::make_shared<SearchNode>(Move{B3, MoveDir::DOWN, 3}, SNA) };
 
   SUBCASE("contains(Board)") {
     CHECK_FALSE(map.contains(Board{"123405678"}));
@@ -23,6 +32,15 @@ TEST_CASE("contains(Board), not_contains(Board)") {
 
   SUBCASE("not_contains(Board)") {
     CHECK_UNARY(map.not_contains(Board{"123405678"}));
+  }
+
+  SUBCASE("nodes with duplicate boards") {
+    map.add(SNA);
+    map.add(SNB);
+    map.add(SNC);
+    CHECK_UNARY(map.contains(SNA_dup->get_board()));
+    CHECK_UNARY(map.contains(SNB_dup->get_board()));
+    CHECK_UNARY(map.contains(SNC_dup->get_board()));
   }
 
 }
