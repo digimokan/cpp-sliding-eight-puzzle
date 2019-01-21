@@ -75,7 +75,7 @@ TEST_CASE("contains()") {
     CHECK_UNARY(q.contains(BC));
   }
 
-  SUBCASE("three pushes, six pops") {
+  SUBCASE("six pushes, three pops") {
     q.push(SNA);
     q.push(SNB);
     q.push(SNC);
