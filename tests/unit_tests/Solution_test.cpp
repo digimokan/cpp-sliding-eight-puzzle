@@ -36,10 +36,11 @@ TEST_CASE("single-step solution") {
     auto act = [&num_steps] (auto node) { num_steps++; };
     sol.for_each_step(act);
     CHECK_EQ(num_steps, 1);
+    CHECK_EQ(sol.get_num_steps(), 1);
   }
 
-  SUBCASE("get_total_path_cost()") {
-    CHECK_EQ(sol.get_total_path_cost(), 0);
+  SUBCASE("get_total_cost()") {
+    CHECK_EQ(sol.get_total_cost(), 0);
   }
 
   SUBCASE("get_time_complexity()") {
@@ -76,6 +77,7 @@ TEST_CASE("four-step solution") {
     auto act = [&num_steps] (auto node) { num_steps++; };
     sol.for_each_step(act);
     CHECK_EQ(num_steps, 4);
+    CHECK_EQ(sol.get_num_steps(), 4);
   }
 
   SUBCASE("iterated steps match correct search nodes") {
@@ -85,8 +87,8 @@ TEST_CASE("four-step solution") {
     sol.for_each_step(act);
   }
 
-  SUBCASE("get_total_path_cost()") {
-    CHECK_EQ(sol.get_total_path_cost(), 13);
+  SUBCASE("get_total_cost()") {
+    CHECK_EQ(sol.get_total_cost(), 13);
   }
 
   SUBCASE("get_time_complexity()") {

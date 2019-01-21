@@ -36,7 +36,11 @@ Solution::Solution (size_t time_complexity, size_t space_complexity,
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-unsigned int Solution::get_total_path_cost () const {
+size_t Solution::get_num_steps () const {
+  return this->steps.size();
+}
+
+unsigned int Solution::get_total_cost () const {
   return this->steps.back()->get_path_cost();
 }
 

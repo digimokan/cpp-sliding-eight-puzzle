@@ -45,7 +45,8 @@ public:
   Solution& operator= (Solution&& rh) = delete;
 
   // specialized methods
-  unsigned int get_total_path_cost () const;
+  size_t get_num_steps () const;
+  unsigned int get_total_cost () const;
   size_t get_time_complexity () const;
   size_t get_space_complexity () const;
   void for_each_step (const std::function<void(std::shared_ptr<SearchNode>)>&) const;
