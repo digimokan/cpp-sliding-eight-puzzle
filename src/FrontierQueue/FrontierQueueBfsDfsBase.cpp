@@ -1,15 +1,16 @@
 /*******************************************************************************
-module:   FrontierQueueBFS
+module:   FrontierQueueBfsDfsBase
 author:   digimokan
-date:     17 JAN 2019
-purpose:  simple BFS FIFO queue with no est-goal-cost strategy
+date:     21 JAN 2019
+purpose:  base STL-list-based queue impl common methods
 *******************************************************************************/
 
 /*******************************************************************************
 * SYSTEM INCLUDES
 *******************************************************************************/
 
-#include <cassert>
+#include <algorithm>
+#include <functional>
 #include <list>
 #include <memory>
 
@@ -17,21 +18,23 @@ purpose:  simple BFS FIFO queue with no est-goal-cost strategy
 * USER INCLUDES
 *******************************************************************************/
 
-#include "FrontierQueueBFS.hpp"
+#include "FrontierQueueBfsDfsBase.hpp"
 #include "SearchNode.hpp"
 
 /*******************************************************************************
-* TEMPLATE METHODS
+* PUBLIC BASE / DERIVED METHODS
 *******************************************************************************/
 
-void FrontierQueueBFS::push_logic (std::shared_ptr<SearchNode> node) {
-  this->fq.push_back(node);
+bool FrontierQueueBfsDfsBase::is_empty () const {
+  return this->fq.empty();
 }
 
-std::shared_ptr<SearchNode> FrontierQueueBFS::pop_logic () {
-  assert(this->not_empty());
-  auto node{ this->fq.front() };
-  this->fq.pop_front();
-  return node;
+bool FrontierQueueBfsDfsBase::contains (const Board& board) const {
+  auto find_board = [board] (auto node) { return (node->get_board() == board); };
+  return ( std::find_if(this->fq.begin(), this->fq.end(), find_board) != this->fq.end() );
+}
+
+size_t FrontierQueueBfsDfsBase::get_current_queue_size () const {
+  return this->fq.size();
 }
 
