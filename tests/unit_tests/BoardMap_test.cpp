@@ -80,6 +80,76 @@ TEST_CASE("add(SearchNode)") {
 
 }
 
+TEST_CASE("get_node(Board)") {
+
+  BoardMap map{};
+  Board B1{ "123405678" };
+  Board B1_dup{ "123405678" };
+  Board B2{ "876543210" };
+  Board B3{ "765483210" };
+  std::shared_ptr<SearchNode> SNA{ std::make_shared<SearchNode>(B1) };
+  std::shared_ptr<SearchNode> SNB{ std::make_shared<SearchNode>(Move{B2, MoveDir::RIGHT, 1}, SNA) };
+  std::shared_ptr<SearchNode> SNC{ std::make_shared<SearchNode>(Move{B3, MoveDir::DOWN, 3}, SNA) };
+
+  SUBCASE("empty BoardMap") {
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+  }
+
+  SUBCASE("one add") {
+    map.add(SNA);
+    CHECK_EQ(map.get_node(B1), SNA);
+  }
+
+  SUBCASE("one add/remove of same node") {
+    map.add(SNA);
+    map.remove(SNA);
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+  }
+
+  SUBCASE("three adds") {
+    map.add(SNA);
+    map.add(SNB);
+    map.add(SNC);
+    CHECK_EQ(map.get_node(B1), SNA);
+    CHECK_EQ(map.get_node(B2), SNB);
+    CHECK_EQ(map.get_node(B3), SNC);
+  }
+
+  SUBCASE("three adds/removes of same node") {
+    map.add(SNA);
+    map.add(SNB);
+    map.add(SNC);
+    map.remove(SNA);
+    map.remove(SNB);
+    map.remove(SNC);
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+    CHECK_EQ(map.get_node(B2), std::nullopt);
+    CHECK_EQ(map.get_node(B3), std::nullopt);
+  }
+
+  SUBCASE("repeated add/remove of same node") {
+    map.add(SNA);
+    CHECK_EQ(map.get_node(B1), SNA);
+    map.remove(SNA);
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+    map.add(SNA);
+    CHECK_EQ(map.get_node(B1), SNA);
+    map.remove(SNA);
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+    map.add(SNA);
+    CHECK_EQ(map.get_node(B1), SNA);
+    map.remove(SNA);
+    CHECK_EQ(map.get_node(B1), std::nullopt);
+  }
+
+  SUBCASE("node with duplicate board") {
+    map.add(SNA);
+    CHECK_EQ(map.get_node(B1_dup), SNA);
+  }
+
+
+}
+
 TEST_CASE("remove(SearchNode)") {
 
   BoardMap map{};

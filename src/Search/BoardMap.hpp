@@ -14,6 +14,7 @@ purpose:  a map of a Boards-->SearchNodes
 
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 
 /*******************************************************************************
@@ -52,6 +53,7 @@ public:
   bool contains (const Board&) const;
   bool not_contains (const Board&) const;
   void add (std::shared_ptr<SearchNode>);
+  std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const;
   void remove (const std::shared_ptr<SearchNode>&);
   size_t get_size () const;
   unsigned int get_path_cost (const Board&) const;

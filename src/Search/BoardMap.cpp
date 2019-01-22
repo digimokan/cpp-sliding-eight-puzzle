@@ -12,6 +12,7 @@ purpose:  a map of a Boards-->SearchNodes
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 
 /*******************************************************************************
@@ -36,6 +37,12 @@ bool BoardMap::not_contains (const Board& board) const {
 
 void BoardMap::add (std::shared_ptr<SearchNode> node) {
   this->map.insert(std::make_pair(this->calc_hash_key(node->get_board()), node));
+}
+
+std::optional<std::shared_ptr<SearchNode>> BoardMap::get_node (const Board& board) const {
+  if (this->contains(board))
+    return this->map.at(this->calc_hash_key(board));
+  return std::nullopt;
 }
 
 void BoardMap::remove (const std::shared_ptr<SearchNode>& node) {
