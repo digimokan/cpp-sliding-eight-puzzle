@@ -219,6 +219,64 @@ TEST_CASE("get_node()") {
 
 }
 
+TEST_CASE("remove_node()") {
+
+  Board BA{ Board{"134862705"} };
+  Board BB{ Board{"134802765"} };
+  Board BC{ Board{"134862075"} };
+  Board BD{ Board{"134862750"} };
+  Board BE{ Board{"104832765"} };
+  Board BF{ Board{"134082765"} };
+  auto SNA{ std::make_shared<SearchNode>(BA) };
+  auto SNA_dup{ std::make_shared<SearchNode>(BA) };
+  auto SNB{ std::make_shared<SearchNode>(BB) };
+  auto SNB_dup{ std::make_shared<SearchNode>(BB) };
+  auto SNC{ std::make_shared<SearchNode>(BC) };
+  auto SNC_dup{ std::make_shared<SearchNode>(BC) };
+  auto SND{ std::make_shared<SearchNode>(BD) };
+  auto SNE{ std::make_shared<SearchNode>(BE) };
+  auto SNF{ std::make_shared<SearchNode>(BF) };
+  BDBQMock q{};
+
+  SUBCASE("one push") {
+    q.push(SNA);
+    q.remove_node(SNA);
+    CHECK_UNARY(q.not_contains(BA));
+    CHECK_EQ(q.get_node(BA), std::nullopt);
+  }
+
+  SUBCASE("three pushes") {
+    q.push(SNA);
+    q.push(SNB);
+    q.push(SNC);
+    q.remove_node(SNA);
+    q.remove_node(SNB);
+    q.remove_node(SNC);
+    CHECK_UNARY(q.not_contains(BA));
+    CHECK_EQ(q.get_node(BA), std::nullopt);
+    CHECK_UNARY(q.not_contains(BB));
+    CHECK_EQ(q.get_node(BB), std::nullopt);
+    CHECK_UNARY(q.not_contains(BC));
+    CHECK_EQ(q.get_node(BC), std::nullopt);
+  }
+
+  SUBCASE("repeated push/pop of same element") {
+    q.push(SNA);
+    q.pop();
+    CHECK_UNARY(q.not_contains(BA));
+    CHECK_EQ(q.get_node(BA), std::nullopt);
+    q.push(SNA);
+    q.pop();
+    CHECK_UNARY(q.not_contains(BA));
+    CHECK_EQ(q.get_node(BA), std::nullopt);
+    q.push(SNA);
+    q.pop();
+    CHECK_UNARY(q.not_contains(BA));
+    CHECK_EQ(q.get_node(BA), std::nullopt);
+  }
+
+}
+
 TEST_CASE("get_current_queue_size()") {
 
   BDBQMock q{};

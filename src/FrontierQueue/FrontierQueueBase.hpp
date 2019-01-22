@@ -55,6 +55,7 @@ public:
   bool is_empty () const override = 0;
   bool contains (const Board& board) const override = 0;
   std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const override = 0;
+  void remove_node (std::shared_ptr<SearchNode> node) override = 0;
   size_t get_current_queue_size () const override = 0;
 
 protected:

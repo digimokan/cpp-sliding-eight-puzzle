@@ -47,6 +47,7 @@ public:
   virtual bool contains (const Board&) const = 0;
   virtual bool not_contains (const Board&) const = 0;
   virtual std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const = 0;
+  virtual void remove_node (std::shared_ptr<SearchNode>) = 0;
   virtual bool is_empty () const = 0;
   virtual bool not_empty () const = 0;
   virtual size_t get_current_queue_size () const = 0;

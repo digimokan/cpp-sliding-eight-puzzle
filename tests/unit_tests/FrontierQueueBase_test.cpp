@@ -23,6 +23,7 @@ public:
   bool is_empty () const override { return true; }
   bool contains (const Board& board) const override { MARK_AS_USED(board); return true; }
   std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const override { MARK_AS_USED(board); return std::nullopt; }
+  void remove_node (std::shared_ptr<SearchNode> node) override { MARK_AS_USED(node); }
   size_t get_current_queue_size () const override { return queue_size; }
 private:
   void push_logic (std::shared_ptr<SearchNode> node) override { MARK_AS_USED(node); this->queue_size++; }

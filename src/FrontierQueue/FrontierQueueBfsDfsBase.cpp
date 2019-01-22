@@ -31,15 +31,19 @@ bool FrontierQueueBfsDfsBase::is_empty () const {
 
 bool FrontierQueueBfsDfsBase::contains (const Board& board) const {
   auto find_board = [board] (auto node) { return (node->get_board() == board); };
-  return ( std::find_if(this->fq.begin(), this->fq.end(), find_board) != this->fq.end() );
+  return ( std::find_if(this->fq.cbegin(), this->fq.cend(), find_board) != this->fq.cend() );
 }
 
 std::optional<std::shared_ptr<SearchNode>> FrontierQueueBfsDfsBase::get_node (const Board& board) const {
   auto find_board = [board] (auto node) { return (node->get_board() == board); };
-  auto target_node{ std::find_if(this->fq.begin(), this->fq.end(), find_board) };
-  if (target_node == this->fq.end())
+  auto target_node{ std::find_if(this->fq.cbegin(), this->fq.cend(), find_board) };
+  if (target_node == this->fq.cend())
     return std::nullopt;
   return *target_node;
+}
+
+void FrontierQueueBfsDfsBase::remove_node (std::shared_ptr<SearchNode> node) {
+  this->fq.remove(node);
 }
 
 size_t FrontierQueueBfsDfsBase::get_current_queue_size () const {
