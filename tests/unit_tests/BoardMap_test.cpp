@@ -147,7 +147,6 @@ TEST_CASE("get_node(Board)") {
     CHECK_EQ(map.get_node(B1_dup), SNA);
   }
 
-
 }
 
 TEST_CASE("remove(SearchNode)") {
