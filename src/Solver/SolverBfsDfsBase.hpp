@@ -65,6 +65,7 @@ private:
 
   // helper methods
   void check_if_root_is_goal ();
+  void keep_lowest_cost_fq_node (const std::shared_ptr<SearchNode>& exp_node, const std::shared_ptr<SearchNode>& fq_node);
 
 };
 

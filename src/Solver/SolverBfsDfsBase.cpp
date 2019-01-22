@@ -45,12 +45,13 @@ std::optional<Solution> SolverBfsDfsBase::solve () {
 }
 
 void SolverBfsDfsBase::act_on_expanded_node (const std::shared_ptr<SearchNode>& enode) {
-  if (this->fq_not_contains(enode->get_board()) && this->not_in_history(enode->get_board())) {
-    if (this->is_goal(enode))
-      this->set_goal_node(enode);
-    else
-      this->fq_push(enode);
-  }
+  auto qnode{ this->fq_get_node(enode->get_board()) };
+  if (this->is_goal(enode))
+    this->set_goal_node(enode);
+  else if (qnode.has_value())
+    this->keep_lowest_cost_fq_node(enode, qnode.value());
+  else if (this->not_in_history(enode->get_board()))
+    this->fq_push(enode);
 }
 
 /*******************************************************************************
@@ -63,5 +64,13 @@ void SolverBfsDfsBase::check_if_root_is_goal () {
     this->set_goal_node(fnode);
   else
     this->fq_push(fnode);
+}
+
+void SolverBfsDfsBase::keep_lowest_cost_fq_node (const std::shared_ptr<SearchNode>& exp_node,
+    const std::shared_ptr<SearchNode>& fq_node) {
+  if (exp_node->get_path_cost() < fq_node->get_path_cost()) {
+    this->fq_remove_node(fq_node);
+    this->fq_push(exp_node);
+  }
 }
 
