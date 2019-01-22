@@ -64,6 +64,14 @@ bool SolverBase::fq_not_contains (const Board& board) const {
   return this->fq->not_contains(board);
 }
 
+std::optional<std::shared_ptr<SearchNode>> SolverBase::fq_get_node (const Board& board) const {
+  return this->fq->get_node(board);
+}
+
+void SolverBase::SolverBase::fq_remove_node (const std::shared_ptr<SearchNode>& node) {
+  this->fq->remove_node(node);
+}
+
 bool SolverBase::fq_is_empty () const {
   return this->fq->is_empty();
 }
@@ -82,6 +90,10 @@ bool SolverBase::not_in_history (const Board& board) const {
 
 void SolverBase::add_to_history (std::shared_ptr<SearchNode> node) {
   this->search_history.add(std::move(node));
+}
+
+std::optional<std::shared_ptr<SearchNode>> SolverBase::get_history_node (const Board& board) const {
+  return this->search_history.get_node(board);
 }
 
 bool SolverBase::is_goal (const std::shared_ptr<SearchNode>& node) const {

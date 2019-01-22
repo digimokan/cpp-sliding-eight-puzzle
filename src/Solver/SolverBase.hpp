@@ -69,11 +69,14 @@ protected:
   std::shared_ptr<SearchNode> fq_pop ();
   bool fq_contains (const Board&) const;
   bool fq_not_contains (const Board&) const;
+  std::optional<std::shared_ptr<SearchNode>> fq_get_node (const Board& board) const;
+  void fq_remove_node (const std::shared_ptr<SearchNode>& node);
   bool fq_is_empty () const;
   bool fq_not_empty () const;
   bool is_in_history (const Board& board) const;
   bool not_in_history (const Board& board) const;
   void add_to_history (std::shared_ptr<SearchNode>);
+  std::optional<std::shared_ptr<SearchNode>> get_history_node (const Board& board) const;
   bool is_goal (const std::shared_ptr<SearchNode>& node) const;
   bool found_goal_node () const;
   bool not_found_goal_node () const;
