@@ -25,13 +25,21 @@ purpose:  simple DFS LIFO queue with no est-goal-cost strategy
 *******************************************************************************/
 
 void FrontierQueueDFS::push_logic (std::shared_ptr<SearchNode> node) {
-  this->fq.push_back(node);
+  this->fq.push(node);
 }
 
 std::shared_ptr<SearchNode> FrontierQueueDFS::pop_logic () {
   assert(this->not_empty());
-  auto node{ this->fq.back() };
-  this->fq.pop_back();
+  auto node{ this->fq.top() };
+  this->fq.pop();
   return node;
+}
+
+std::shared_ptr<SearchNode> FrontierQueueDFS::peek_next_logic () const {
+  return this->fq.top();
+}
+
+size_t FrontierQueueDFS::get_size_logic () const {
+  return this->fq.size();
 }
 

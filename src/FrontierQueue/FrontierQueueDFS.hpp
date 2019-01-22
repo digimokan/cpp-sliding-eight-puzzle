@@ -12,14 +12,14 @@ purpose:  simple DFS LIFO queue with no est-goal-cost strategy
 * SYSTEM INCLUDES
 *******************************************************************************/
 
-#include <list>
 #include <memory>
+#include <stack>
 
 /*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
-#include "FrontierQueueBfsDfsBase.hpp"
+#include "FrontierQueueBase.hpp"
 
 /*******************************************************************************
 * FORWARD DECLARES
@@ -31,7 +31,7 @@ class SearchNode;
 * INTERFACE
 *******************************************************************************/
 
-class FrontierQueueDFS : public FrontierQueueBfsDfsBase {
+class FrontierQueueDFS : public FrontierQueueBase {
 
 public:
 
@@ -42,16 +42,21 @@ public:
   ~FrontierQueueDFS () override = default;
 
   // operators
-  FrontierQueueDFS (const FrontierQueueDFS& in) = default;
-  FrontierQueueDFS& operator= (const FrontierQueueDFS& rh) = default;
-  FrontierQueueDFS (FrontierQueueDFS&& in) = default;
-  FrontierQueueDFS& operator= (FrontierQueueDFS&& rh) = default;
+  FrontierQueueDFS (const FrontierQueueDFS& in) = delete;
+  FrontierQueueDFS& operator= (const FrontierQueueDFS& rh) = delete;
+  FrontierQueueDFS (FrontierQueueDFS&& in) = delete;
+  FrontierQueueDFS& operator= (FrontierQueueDFS&& rh) = delete;
 
 private:
+
+  // fields
+  std::stack<std::shared_ptr<SearchNode>> fq;
 
   // template methods
   void push_logic (std::shared_ptr<SearchNode> node) override;
   std::shared_ptr<SearchNode> pop_logic () override;
+  std::shared_ptr<SearchNode> peek_next_logic () const override;
+  size_t get_size_logic () const override;
 
 };
 

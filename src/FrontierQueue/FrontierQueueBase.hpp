@@ -20,13 +20,10 @@ purpose:  base implementation for a "frontier queue" of a search graph
 * USER INCLUDES
 *******************************************************************************/
 
+#include "BoardMap.hpp"
 #include "FrontierQueueIface.hpp"
-
-/*******************************************************************************
-* FORWARD DECLARES
-*******************************************************************************/
-
-class SearchNode;
+#include "NodeSet.hpp"
+#include "SearchNode.hpp"
 
 /*******************************************************************************
 * INTERFACE
@@ -40,23 +37,23 @@ public:
   ~FrontierQueueBase () override = default;
 
   // operators
-  FrontierQueueBase (const FrontierQueueBase& in) = default;
-  FrontierQueueBase& operator= (const FrontierQueueBase& rh) = default;
-  FrontierQueueBase (FrontierQueueBase&& in) = default;
-  FrontierQueueBase& operator= (FrontierQueueBase&& rh) = default;
+  FrontierQueueBase (const FrontierQueueBase& in) = delete;
+  FrontierQueueBase& operator= (const FrontierQueueBase& rh) = delete;
+  FrontierQueueBase (FrontierQueueBase&& in) = delete;
+  FrontierQueueBase& operator= (FrontierQueueBase&& rh) = delete;
 
   // base / derived methods
-  size_t get_largest_queue_size () const final;
-  size_t get_num_nodes_popped () const final;
   void push (std::shared_ptr<SearchNode> node) final;
   std::shared_ptr<SearchNode> pop () final;
-  bool not_empty () const final;
+  bool contains (const Board& board) const final;
   bool not_contains (const Board& board) const final;
-  bool is_empty () const override = 0;
-  bool contains (const Board& board) const override = 0;
-  std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const override = 0;
-  void remove_node (std::shared_ptr<SearchNode> node) override = 0;
-  size_t get_current_queue_size () const override = 0;
+  std::optional<std::shared_ptr<SearchNode>> get_node (const Board& board) const final;
+  void remove_node (std::shared_ptr<SearchNode> node) final;
+  bool is_empty () const final;
+  bool not_empty () const final;
+  size_t get_current_queue_size () const final;
+  size_t get_largest_queue_size () const final;
+  size_t get_num_nodes_popped () const final;
 
 protected:
 
@@ -66,12 +63,22 @@ protected:
   // base / derived methods
   virtual void push_logic (std::shared_ptr<SearchNode>) = 0;
   virtual std::shared_ptr<SearchNode> pop_logic () = 0;
+  virtual std::shared_ptr<SearchNode> peek_next_logic () const = 0;
+  virtual size_t get_size_logic () const = 0;
 
 private:
 
   // fields
+  size_t current_queue_size;
   size_t largest_queue_size;
   size_t num_nodes_popped;
+  NodeSet nodes_on_queue;
+  BoardMap board_node_lookup;
+
+  // helper methods
+  void sync_node_addition (const std::shared_ptr<SearchNode>& node);
+  void sync_node_removal (const std::shared_ptr<SearchNode>& node);
+  void prune_removed_nodes ();
 
 };
 
