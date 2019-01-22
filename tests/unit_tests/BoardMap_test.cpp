@@ -13,6 +13,10 @@
 #include "Move.hpp"
 #include "MoveDir.hpp"
 
+/*******************************************************************************
+* TEST CASES
+*******************************************************************************/
+
 TEST_CASE("contains(Board), not_contains(Board)") {
 
   BoardMap map{};
