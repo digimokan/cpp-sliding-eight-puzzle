@@ -35,6 +35,7 @@ public:
   Solution () = delete;
   Solution (size_t time_complexity, size_t space_complexity);
   Solution (size_t time_complexity, size_t space_complexity, const std::shared_ptr<SearchNode>& goal_node);
+  Solution (size_t time_complexity, size_t space_complexity, Solution solution);
 
   // destructor
   ~Solution () = default;

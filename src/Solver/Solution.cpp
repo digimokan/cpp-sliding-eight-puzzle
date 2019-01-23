@@ -39,6 +39,13 @@ Solution::Solution (size_t time_complexity, size_t space_complexity,
   this->build_solution_steps(goal_node);
 }
 
+Solution::Solution (size_t time_complexity, size_t space_complexity, Solution solution)
+  : solved{true},
+    steps{solution.steps},
+    time_complexity{time_complexity},
+    space_complexity{space_complexity}
+{ }
+
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
