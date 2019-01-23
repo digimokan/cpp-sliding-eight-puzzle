@@ -69,7 +69,7 @@ void SolverEstGoalCostBase::act_on_expanded_node (const std::shared_ptr<SearchNo
 
 void SolverEstGoalCostBase::keep_lowest_cost_fq_node (const std::shared_ptr<SearchNode>& exp_node,
     const std::shared_ptr<SearchNode>& fq_node) {
-  if (exp_node->get_path_cost() < fq_node->get_path_cost()) {
+  if (this->est_cost->get_est_goal_cost(exp_node) < this->est_cost->get_est_goal_cost(fq_node)) {
     this->fq_remove_node(fq_node);
     this->fq_push(exp_node);
   }
