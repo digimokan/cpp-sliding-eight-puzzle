@@ -37,11 +37,11 @@ TEST_CASE("push(), pop()") {
     q.push(SNA);
     q.push(SNE);
     q.push(SNB);
-    CHECK_EQ(q.pop(), SNE);
-    CHECK_EQ(q.pop(), SND);
-    CHECK_EQ(q.pop(), SNC);
-    CHECK_EQ(q.pop(), SNB);
     CHECK_EQ(q.pop(), SNA);
+    CHECK_EQ(q.pop(), SNB);
+    CHECK_EQ(q.pop(), SNC);
+    CHECK_EQ(q.pop(), SND);
+    CHECK_EQ(q.pop(), SNE);
   }
 
 }

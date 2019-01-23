@@ -23,6 +23,6 @@ purpose:  base class for an estimated-goal-cost
 *******************************************************************************/
 
 bool EstGoalCostBase::operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) {
-  return (this->get_est_goal_cost(lh) < this->get_est_goal_cost(rh));
+  return (this->get_est_goal_cost(lh) > this->get_est_goal_cost(rh));
 }
 
