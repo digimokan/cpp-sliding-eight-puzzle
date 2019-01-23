@@ -2,7 +2,7 @@
 module:   EstGoalCostUniform
 author:   digimokan
 date:     17 JAN 2019
-purpose:  uninformed strategy: est-cost-to-reach-goal = path cost to curr node
+purpose:  uninformed strategy: g(n) = path cost to curr node
 *******************************************************************************/
 
 #ifndef EST_GOAL_COST_UNIFORM_HPP
