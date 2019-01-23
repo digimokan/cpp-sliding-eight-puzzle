@@ -62,17 +62,7 @@ TEST_CASE("empty queue") {
 TEST_CASE("push single node") {
 
   Board BA{ Board{"134862705"} };
-  /* Board BB{ Board{"134802765"} }; */
-  /* Board BC{ Board{"134862075"} }; */
-  /* Board BD{ Board{"134862750"} }; */
-  /* Board BE{ Board{"104832765"} }; */
-  /* Board BF{ Board{"134082765"} }; */
   auto SNA{ std::make_shared<SearchNode>(BA) };
-  /* auto SNB{ std::make_shared<SearchNode>(BB) }; */
-  /* auto SNC{ std::make_shared<SearchNode>(BC) }; */
-  /* auto SND{ std::make_shared<SearchNode>(BD) }; */
-  /* auto SNE{ std::make_shared<SearchNode>(BE) }; */
-  /* auto SNF{ std::make_shared<SearchNode>(BF) }; */
   FQBMock fqbmock{};
   fqbmock.push(SNA);
 
