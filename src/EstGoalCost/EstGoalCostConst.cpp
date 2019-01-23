@@ -2,7 +2,7 @@
 module:   EstGoalCostConst
 author:   digimokan
 date:     17 JAN 2019
-purpose:  uninformed strategy: return 1, all nodes equally likely to reach goal
+purpose:  uninformed strategy: return 0, all nodes equally likely to reach goal
 *******************************************************************************/
 
 /*******************************************************************************
@@ -25,6 +25,6 @@ purpose:  uninformed strategy: return 1, all nodes equally likely to reach goal
 
 unsigned int EstGoalCostConst::get_est_goal_cost (std::shared_ptr<SearchNode> node) const {
   MARK_AS_USED(node);
-  return 1u;
+  return 0;
 }
 
