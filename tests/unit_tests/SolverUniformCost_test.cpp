@@ -17,11 +17,12 @@
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "EstGoalCostUniform.hpp"
 #include "MoveCostSqVal.hpp"
 #include "MoveDir.hpp"
 #include "SearchNode.hpp"
 #include "Solution.hpp"
-#include "SolverUniformCost.hpp"
+#include "SolverFn.hpp"
 
 /*******************************************************************************
 * TEST CASES
@@ -29,7 +30,7 @@
 
 TEST_CASE("goal_board == start_board (1-step solution)") {
 
-  SolverUniformCost solver{ Board{"123804765"}, Board{"123804765"}, std::make_shared<MoveCostSqVal>()};
+  SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ Board{"123804765"}, Board{"123804765"}};
   auto solution{ solver.solve() };
   constexpr size_t num_steps{ 1 };
 
@@ -79,19 +80,19 @@ TEST_CASE("2-step solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 4 };
 
   SUBCASE("returns valid optional<Solution>") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
@@ -104,19 +105,19 @@ TEST_CASE("2-step solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_total_cost(), 4);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_time_complexity(), 4);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUniformCost solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BB };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_space_complexity(), 5);
   }
@@ -134,19 +135,19 @@ TEST_CASE("3-step solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 4, 5 };
 
   SUBCASE("returns valid optional<Solution>") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
@@ -159,19 +160,19 @@ TEST_CASE("3-step solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_total_cost(), 9);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_time_complexity(), 11);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUniformCost solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BC };
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_space_complexity(), 9);
   }
@@ -196,19 +197,19 @@ TEST_CASE("6-step \"easy\" solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 6, 2, 4, 3, 2 };
 
   SUBCASE("returns valid optional<Solution>") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
@@ -221,19 +222,19 @@ TEST_CASE("6-step \"easy\" solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_total_cost(), 17);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_time_complexity(), 24);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUniformCost solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
+    SolverFn<MoveCostSqVal, EstGoalCostUniform> solver{ BA, BF};
     auto solution{ solver.solve() };
     CHECK_EQ(solution.get_space_complexity(), 16);
   }

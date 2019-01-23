@@ -1,8 +1,11 @@
 /*******************************************************************************
-module:   SolverUniformCost
+module:   SolverFn
 author:   digimokan
 date:     23 JAN 2019
-purpose:  solve an eight-puzzle using uniform-cost search
+purpose:  template class for solver that uses uniform, f(n), g(n), etc.
+template params:
+          T - an implementation of MoveCostIface
+          U - an implementation of EstGoalCostIface
 *******************************************************************************/
 
 #ifndef SOLVER_UNIFORM_COST_HPP
@@ -18,35 +21,36 @@ purpose:  solve an eight-puzzle using uniform-cost search
 * USER INCLUDES
 *******************************************************************************/
 
+#include "Board.hpp"
+#include "FrontierQueueEstCost.hpp"
 #include "SolverEstGoalCostBase.hpp"
-
-/*******************************************************************************
-* FORWARD DECLARES
-*******************************************************************************/
-
-class Board;
-class MoveCostIface;
 
 /*******************************************************************************
 * INTERFACE
 *******************************************************************************/
 
-class SolverUniformCost : public SolverEstGoalCostBase  {
+template <typename T, typename U>
+class SolverFn : public SolverEstGoalCostBase  {
 
 public:
 
   // constructors
-  SolverUniformCost () = delete;
-  explicit SolverUniformCost (Board start_board, Board goal_board, const std::shared_ptr<MoveCostIface>& move_cost);
+  SolverFn () = delete;
+  explicit SolverFn (Board start_board, Board goal_board)
+  : SolverEstGoalCostBase{start_board, goal_board,
+      std::make_shared<T>(),
+      std::make_shared<U>(),
+      std::make_shared<FrontierQueueEstCost<U>>()}
+  { }
 
   // destructor
-  ~SolverUniformCost () override = default;
+  ~SolverFn () override = default;
 
   // operators
-  SolverUniformCost (const SolverUniformCost& in) = delete;
-  SolverUniformCost& operator= (const SolverUniformCost& rh) = delete;
-  SolverUniformCost (SolverUniformCost&& in) = delete;
-  SolverUniformCost& operator= (SolverUniformCost&& rh) = delete;
+  SolverFn (const SolverFn& in) = delete;
+  SolverFn& operator= (const SolverFn& rh) = delete;
+  SolverFn (SolverFn&& in) = delete;
+  SolverFn& operator= (SolverFn&& rh) = delete;
 
 };
 
