@@ -18,7 +18,7 @@ purpose:  uninformed strategy: return 1, all nodes equally likely to reach goal
 * USER INCLUDES
 *******************************************************************************/
 
-#include "EstGoalCostIface.hpp"
+#include "EstGoalCostBase.hpp"
 
 /*******************************************************************************
 * FORWARD DECLARES
@@ -30,7 +30,7 @@ class SearchNode;
 * INTERFACE
 *******************************************************************************/
 
-class EstGoalCostConst : public EstGoalCostIface {
+class EstGoalCostConst : public EstGoalCostBase {
 
 public:
 
@@ -47,7 +47,7 @@ public:
   EstGoalCostConst& operator= (EstGoalCostConst&& rh) = default;
 
   // base / derived methods
-  unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) override;
+  unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override;
 
 };
 

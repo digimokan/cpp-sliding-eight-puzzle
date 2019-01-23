@@ -1,8 +1,8 @@
 /*******************************************************************************
-module:   EstGoalCostConst
+module:   EstGoalCostBase
 author:   digimokan
-date:     17 JAN 2019
-purpose:  uninformed strategy: return 1, all nodes equally likely to reach goal
+date:     22 JAN 2019
+purpose:  base class for an estimated-goal-cost
 *******************************************************************************/
 
 /*******************************************************************************
@@ -15,16 +15,14 @@ purpose:  uninformed strategy: return 1, all nodes equally likely to reach goal
 * USER INCLUDES
 *******************************************************************************/
 
-#include "CompilerUtils.hpp"
-#include "EstGoalCostConst.hpp"
+#include "EstGoalCostBase.hpp"
 #include "SearchNode.hpp"
 
 /*******************************************************************************
 * BASE / DERIVED METHODS
 *******************************************************************************/
 
-unsigned int EstGoalCostConst::get_est_goal_cost (std::shared_ptr<SearchNode> node) const {
-  MARK_AS_USED(node);
-  return 1u;
+bool EstGoalCostBase::operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) {
+  return (this->get_est_goal_cost(lh) < this->get_est_goal_cost(rh));
 }
 

@@ -40,7 +40,8 @@ public:
   EstGoalCostIface& operator= (EstGoalCostIface&& rh) = default;
 
   // base / derived methods
-  virtual unsigned int get_est_goal_cost (std::shared_ptr<SearchNode>) = 0;
+  virtual bool operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) = 0;
+  virtual unsigned int get_est_goal_cost (std::shared_ptr<SearchNode>) const = 0;
 
 protected:
 

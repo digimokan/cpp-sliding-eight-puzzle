@@ -1,12 +1,12 @@
 /*******************************************************************************
-module:   EstGoalCostUniform
+module:   EstGoalCostBase
 author:   digimokan
-date:     17 JAN 2019
-purpose:  uninformed strategy: est-cost-to-reach-goal = path cost to curr node
+date:     22 JAN 2019
+purpose:  base class for an estimated-goal-cost
 *******************************************************************************/
 
-#ifndef EST_GOAL_COST_UNIFORM_HPP
-#define EST_GOAL_COST_UNIFORM_HPP 1
+#ifndef EST_GOAL_COST_BASE_HPP
+#define EST_GOAL_COST_BASE_HPP 1
 
 /*******************************************************************************
 * SYSTEM INCLUDES
@@ -18,36 +18,33 @@ purpose:  uninformed strategy: est-cost-to-reach-goal = path cost to curr node
 * USER INCLUDES
 *******************************************************************************/
 
-#include "EstGoalCostBase.hpp"
-
-/*******************************************************************************
-* FORWARD DECLARES
-*******************************************************************************/
-
-class SearchNode;
+#include "EstGoalCostIface.hpp"
 
 /*******************************************************************************
 * INTERFACE
 *******************************************************************************/
 
-class EstGoalCostUniform : public EstGoalCostBase {
+class EstGoalCostBase : public EstGoalCostIface {
 
 public:
 
-  // constructors
-  EstGoalCostUniform () = default;
-
   // destructor
-  ~EstGoalCostUniform () override = default;
+  ~EstGoalCostBase () override = default;
 
   // operators
-  EstGoalCostUniform (const EstGoalCostUniform& in) = default;
-  EstGoalCostUniform& operator= (const EstGoalCostUniform& rh) = default;
-  EstGoalCostUniform (EstGoalCostUniform&& in) = default;
-  EstGoalCostUniform& operator= (EstGoalCostUniform&& rh) = default;
+  EstGoalCostBase (const EstGoalCostBase& in) = default;
+  EstGoalCostBase& operator= (const EstGoalCostBase& rh) = default;
+  EstGoalCostBase (EstGoalCostBase&& in) = default;
+  EstGoalCostBase& operator= (EstGoalCostBase&& rh) = default;
 
   // base / derived methods
-  unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override;
+  bool operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) final;
+  unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override = 0;
+
+protected:
+
+  // constructors
+  EstGoalCostBase () = default;
 
 };
 
@@ -55,5 +52,5 @@ public:
 * END
 *******************************************************************************/
 
-#endif // EST_GOAL_COST_UNIFORM_HPP
+#endif // EST_GOAL_COST_BASE_HPP
 
