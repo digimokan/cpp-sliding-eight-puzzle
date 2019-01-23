@@ -20,6 +20,7 @@ purpose:  base Solver impl class for BFS/DFS Solvers
 * USER INCLUDES
 *******************************************************************************/
 
+#include "Solution.hpp"
 #include "SolverBase.hpp"
 
 /*******************************************************************************
@@ -52,7 +53,7 @@ public:
   SolverBfsDfsBase& operator= (SolverBfsDfsBase&& rh) = delete;
 
   // base / derived methods
-  std::optional<Solution> solve () final;
+  Solution solve () final;
 
 protected:
 

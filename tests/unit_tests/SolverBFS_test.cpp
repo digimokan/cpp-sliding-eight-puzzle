@@ -11,7 +11,6 @@
 #include <array>
 #include <functional>
 #include <memory>
-#include <optional>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -34,11 +33,11 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   constexpr size_t num_steps{ 1 };
 
   SUBCASE("returns valid optional<Solution>") {
-    CHECK_NE(solution, std::nullopt);
+    CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    CHECK_EQ(solution.value().get_num_steps(), num_steps);
+    CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
@@ -52,19 +51,19 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
       CHECK_EQ(node->get_move_cost(), move_costs.at(i));
       i++;
     };
-    solution.value().for_each_step(act);
+    solution.for_each_step(act);
   }
 
   SUBCASE("get_total_cost()") {
-    CHECK_EQ(solution.value().get_total_cost(), 0);
+    CHECK_EQ(solution.get_total_cost(), 0);
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 1);
+    CHECK_EQ(solution.get_time_complexity(), 1);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.value().get_space_complexity(), 1);
+    CHECK_EQ(solution.get_space_complexity(), 1);
   }
 
 }
@@ -81,11 +80,11 @@ TEST_CASE("2-step solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 4 };
 
   SUBCASE("returns valid optional<Solution>") {
-    CHECK_NE(solution, std::nullopt);
+    CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    CHECK_EQ(solution.value().get_num_steps(), num_steps);
+    CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
@@ -96,19 +95,19 @@ TEST_CASE("2-step solution") {
       CHECK_EQ(node->get_move_cost(), move_costs.at(i));
       i++;
     };
-    solution.value().for_each_step(act);
+    solution.for_each_step(act);
   }
 
   SUBCASE("get_total_cost()") {
-    CHECK_EQ(solution.value().get_total_cost(), 4);
+    CHECK_EQ(solution.get_total_cost(), 4);
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 2);
+    CHECK_EQ(solution.get_time_complexity(), 2);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.value().get_space_complexity(), 3);
+    CHECK_EQ(solution.get_space_complexity(), 3);
   }
 
 }
@@ -126,11 +125,11 @@ TEST_CASE("3-step solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 4, 5 };
 
   SUBCASE("returns valid optional<Solution>") {
-    CHECK_NE(solution, std::nullopt);
+    CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    CHECK_EQ(solution.value().get_num_steps(), num_steps);
+    CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
@@ -141,19 +140,19 @@ TEST_CASE("3-step solution") {
       CHECK_EQ(node->get_move_cost(), move_costs.at(i));
       i++;
     };
-    solution.value().for_each_step(act);
+    solution.for_each_step(act);
   }
 
   SUBCASE("get_total_cost()") {
-    CHECK_EQ(solution.value().get_total_cost(), 9);
+    CHECK_EQ(solution.get_total_cost(), 9);
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 6);
+    CHECK_EQ(solution.get_time_complexity(), 6);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.value().get_space_complexity(), 7);
+    CHECK_EQ(solution.get_space_complexity(), 7);
   }
 
 }
@@ -178,11 +177,11 @@ TEST_CASE("6-step \"easy\" solution") {
   std::array<unsigned int, num_steps> move_costs{ 0, 6, 2, 4, 3, 2 };
 
   SUBCASE("returns valid optional<Solution>") {
-    CHECK_NE(solution, std::nullopt);
+    CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    CHECK_EQ(solution.value().get_num_steps(), num_steps);
+    CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
@@ -193,19 +192,19 @@ TEST_CASE("6-step \"easy\" solution") {
       CHECK_EQ(node->get_move_cost(), move_costs.at(i));
       i++;
     };
-    solution.value().for_each_step(act);
+    solution.for_each_step(act);
   }
 
   SUBCASE("get_total_cost()") {
-    CHECK_EQ(solution.value().get_total_cost(), 17);
+    CHECK_EQ(solution.get_total_cost(), 17);
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.value().get_time_complexity(), 25);
+    CHECK_EQ(solution.get_time_complexity(), 25);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.value().get_space_complexity(), 18);
+    CHECK_EQ(solution.get_space_complexity(), 18);
   }
 
 }

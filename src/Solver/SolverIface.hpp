@@ -9,16 +9,10 @@ purpose:  finds solution-steps to an input eight-puzzle board
 #define SOLVER_IFACE_HPP 1
 
 /*******************************************************************************
-* SYSTEM INCLUDES
+* USER INCLUDES
 *******************************************************************************/
 
-#include <optional>
-
-/*******************************************************************************
-* FORWARD DECLARES
-*******************************************************************************/
-
-class Solution;
+#include "Solution.hpp"
 
 /*******************************************************************************
 * INTERFACE
@@ -38,7 +32,7 @@ public:
   SolverIface& operator= (SolverIface&& rh) = delete;
 
   // base / derived methods
-  virtual std::optional<Solution> solve () = 0;
+  virtual Solution solve () = 0;
 
 protected:
 

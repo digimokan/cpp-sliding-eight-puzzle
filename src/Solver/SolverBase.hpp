@@ -21,6 +21,7 @@ purpose:  base SolverIface impl class with common methods
 
 #include "Board.hpp"
 #include "BoardMap.hpp"
+#include "Solution.hpp"
 #include "SolverIface.hpp"
 
 /*******************************************************************************
@@ -53,7 +54,7 @@ public:
   SolverBase& operator= (SolverBase&& rh) = delete;
 
   // base / derived methods
-  std::optional<Solution> solve () override = 0;
+  Solution solve () override = 0;
 
 protected:
 
@@ -82,7 +83,7 @@ protected:
   bool not_found_goal_node () const;
   void set_goal_node (std::shared_ptr<SearchNode>);
   std::shared_ptr<SearchNode> get_goal_node () const;
-  std::optional<Solution> make_solution_from_goal_node () const;
+  Solution make_solution_from_goal_node () const;
 
 private:
 

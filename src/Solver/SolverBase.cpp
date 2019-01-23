@@ -116,9 +116,12 @@ std::shared_ptr<SearchNode> SolverBase::get_goal_node () const {
   return this->goal_node.value();
 }
 
-std::optional<Solution> SolverBase::make_solution_from_goal_node () const {
+Solution SolverBase::make_solution_from_goal_node () const {
   if (this->not_found_goal_node())
-    return std::nullopt;
+    return Solution{
+      this->fq->get_num_nodes_popped(),
+      this->fq->get_largest_queue_size()
+    };
   return Solution{
     this->fq->get_num_nodes_popped(),
     this->fq->get_largest_queue_size(),

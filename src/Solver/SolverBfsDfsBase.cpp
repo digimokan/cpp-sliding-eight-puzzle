@@ -36,7 +36,7 @@ SolverBfsDfsBase::SolverBfsDfsBase (Board start_board, Board goal_board,
 * BASE / DERIVED METHODS
 *******************************************************************************/
 
-std::optional<Solution> SolverBfsDfsBase::solve () {
+Solution SolverBfsDfsBase::solve () {
   this->check_if_root_is_goal();
   while ( (this->fq_not_empty()) && (this->not_found_goal_node()) ) {
     auto fnode{ this->fq_pop() };

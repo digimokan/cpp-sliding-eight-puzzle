@@ -33,6 +33,7 @@ public:
 
   // constructors
   Solution () = delete;
+  Solution (size_t time_complexity, size_t space_complexity);
   Solution (size_t time_complexity, size_t space_complexity, const std::shared_ptr<SearchNode>& goal_node);
 
   // destructor
@@ -45,6 +46,8 @@ public:
   Solution& operator= (Solution&& rh) = delete;
 
   // specialized methods
+  bool is_solved () const;
+  bool not_solved () const;
   size_t get_num_steps () const;
   unsigned int get_total_cost () const;
   size_t get_time_complexity () const;
@@ -54,6 +57,7 @@ public:
 private:
 
   // fields
+  const bool solved;
   std::deque<std::shared_ptr<SearchNode>> steps;
   const size_t time_complexity;
   const size_t space_complexity;
