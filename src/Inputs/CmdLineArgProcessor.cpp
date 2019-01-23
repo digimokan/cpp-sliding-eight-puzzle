@@ -147,15 +147,15 @@ void CmdLineArgProcessor::handle_help (int exit_code) {
   std::cout << "  " << "-i, --iterative-deepening" << std::endl << "      "
             << "find solution using depth-first search with iterative deepening" << std::endl;
   std::cout << "  " << "-u, --uniform-cost" << std::endl << "      "
-            << "find solution using uniform-cost search" << std::endl;
+            << "find solution using g(n) uniform-cost search" << std::endl;
   std::cout << "  " << "-s, --best-first" << std::endl << "      "
-            << "find solution using best-first search (num squares in correct pos)" << std::endl;
+            << "find solution using h(n) num misplaced tiles" << std::endl;
   std::cout << "  " << "-1, --a-star-1" << std::endl << "      "
-            << "find solution using A*1 search (num squares in correct pos)" << std::endl;
+            << "find solution using A*1 search (g(n) + h(n) num misplaced tiles)" << std::endl;
   std::cout << "  " << "-2, --a-star-2" << std::endl << "      "
-            << "find solution using A*2 search (sum of manhattan dists)" << std::endl;
+            << "find solution using A*2 search (g(n) + h(n) sum manhattan dists)" << std::endl;
   std::cout << "  " << "-3, --a-star-3" << std::endl << "      "
-            << "find solution using A*3 search (custom heuristic)" << std::endl;
+            << "find solution using A*3 search (g(n) + h(n) custom heuristic)" << std::endl;
   std::cout << "  " << "-m <num>, --max-iterations=<num>" << std::endl << "      "
             << "specify max num iterations to use while searching" << std::endl;
   exit(exit_code);
