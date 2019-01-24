@@ -58,6 +58,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
+
 }
 
 TEST_CASE("2-step solution") {
