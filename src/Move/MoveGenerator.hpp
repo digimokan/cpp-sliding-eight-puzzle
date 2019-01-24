@@ -40,9 +40,9 @@ public:
   ~MoveGenerator () = default;
 
   // operators
-  MoveGenerator (const MoveGenerator& in) = delete;
+  MoveGenerator (const MoveGenerator& in) = default;
   MoveGenerator& operator= (const MoveGenerator& rh) = delete;
-  MoveGenerator (MoveGenerator&& in) = delete;
+  MoveGenerator (MoveGenerator&& in) = default;
   MoveGenerator& operator= (MoveGenerator&& rh) = delete;
 
   // specialized methods
