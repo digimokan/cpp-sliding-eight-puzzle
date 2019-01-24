@@ -42,9 +42,9 @@ public:
 
   // operators
   EstGoalCostConst (const EstGoalCostConst& in) = default;
-  EstGoalCostConst& operator= (const EstGoalCostConst& rh) = default;
+  EstGoalCostConst& operator= (const EstGoalCostConst& rh) = delete;
   EstGoalCostConst (EstGoalCostConst&& in) = default;
-  EstGoalCostConst& operator= (EstGoalCostConst&& rh) = default;
+  EstGoalCostConst& operator= (EstGoalCostConst&& rh) = delete;
 
   // base / derived methods
   unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override;

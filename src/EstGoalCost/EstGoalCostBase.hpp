@@ -33,9 +33,9 @@ public:
 
   // operators
   EstGoalCostBase (const EstGoalCostBase& in) = default;
-  EstGoalCostBase& operator= (const EstGoalCostBase& rh) = default;
+  EstGoalCostBase& operator= (const EstGoalCostBase& rh) = delete;
   EstGoalCostBase (EstGoalCostBase&& in) = default;
-  EstGoalCostBase& operator= (EstGoalCostBase&& rh) = default;
+  EstGoalCostBase& operator= (EstGoalCostBase&& rh) = delete;
 
   // base / derived methods
   bool operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) final;

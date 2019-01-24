@@ -1,14 +1,12 @@
 /*******************************************************************************
-module:   EstGoalCostIface
+module:   EstGoalCostInformedBase
 author:   digimokan
-date:     17 JAN 2019
-purpose:  given a SearchNode (and possibly, goal board), return est cost of goal
-      --> uninformed strategy: returns g(n) (uniform) or const (simple queue)
-      --> informed strategy: returns f(n) (which = h(n), maybe including g(n))
+date:     23 JAN 2019
+purpose:  base class for an informed estimated-goal-cost (considers goal board)
 *******************************************************************************/
 
-#ifndef EST_GOAL_COST_IFACE_HPP
-#define EST_GOAL_COST_IFACE_HPP 1
+#ifndef EST_GOAL_COST_INFORMED_BASE_HPP
+#define EST_GOAL_COST_INFORMED_BASE_HPP 1
 
 /*******************************************************************************
 * SYSTEM INCLUDES
@@ -17,36 +15,43 @@ purpose:  given a SearchNode (and possibly, goal board), return est cost of goal
 #include <memory>
 
 /*******************************************************************************
-* FORWARD DECLARES
+* USER INCLUDES
 *******************************************************************************/
 
-class SearchNode;
+#include "Board.hpp"
+#include "EstGoalCostBase.hpp"
 
 /*******************************************************************************
 * INTERFACE
 *******************************************************************************/
 
-class EstGoalCostIface {
+class EstGoalCostInformedBase : public EstGoalCostBase {
 
 public:
 
   // destructor
-  virtual ~EstGoalCostIface () = default;
+  ~EstGoalCostInformedBase () override = default;
 
   // operators
-  EstGoalCostIface (const EstGoalCostIface& in) = default;
-  EstGoalCostIface& operator= (const EstGoalCostIface& rh) = delete;
-  EstGoalCostIface (EstGoalCostIface&& in) = default;
-  EstGoalCostIface& operator= (EstGoalCostIface&& rh) = delete;
+  EstGoalCostInformedBase (const EstGoalCostInformedBase& in) = default;
+  EstGoalCostInformedBase& operator= (const EstGoalCostInformedBase& rh) = delete;
+  EstGoalCostInformedBase (EstGoalCostInformedBase&& in) = default;
+  EstGoalCostInformedBase& operator= (EstGoalCostInformedBase&& rh) = delete;
 
   // base / derived methods
-  virtual bool operator() (const std::shared_ptr<SearchNode>& lh, const std::shared_ptr<SearchNode>& rh) = 0;
-  virtual unsigned int get_est_goal_cost (std::shared_ptr<SearchNode>) const = 0;
+  unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override = 0;
 
 protected:
 
   // constructors
-  EstGoalCostIface () = default;
+  explicit EstGoalCostInformedBase (const Board& goal_board);
+
+  // specialized methods
+  Board get_goal_board () const;
+
+private:
+
+  const Board goal_board;
 
 };
 
@@ -54,5 +59,5 @@ protected:
 * END
 *******************************************************************************/
 
-#endif // EST_GOAL_COST_IFACE_HPP
+#endif // EST_GOAL_COST_INFORMED_BASE_HPP
 

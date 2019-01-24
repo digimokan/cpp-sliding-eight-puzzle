@@ -1,8 +1,8 @@
 /*******************************************************************************
-module:   EstGoalCostMisplSq
+module:   EstGoalCostInformedBase
 author:   digimokan
 date:     23 JAN 2019
-purpose:  informed strategy: h(n) = number of misplaced tiles
+purpose:  base class for an informed estimated-goal-cost (considers goal board)
 *******************************************************************************/
 
 /*******************************************************************************
@@ -16,28 +16,22 @@ purpose:  informed strategy: h(n) = number of misplaced tiles
 *******************************************************************************/
 
 #include "Board.hpp"
-#include "EstGoalCostMisplSq.hpp"
+#include "EstGoalCostInformedBase.hpp"
 #include "SearchNode.hpp"
 
 /*******************************************************************************
-* CONSTRUCTORS
+* CONSTRUCTOR
 *******************************************************************************/
 
-EstGoalCostMisplSq::EstGoalCostMisplSq (const Board& goal_board)
-  : EstGoalCostInformedBase{goal_board}
+EstGoalCostInformedBase::EstGoalCostInformedBase (const Board& goal_board)
+  : goal_board{goal_board}
 { }
 
 /*******************************************************************************
-* BASE / DERIVED METHODS
+* SPECIALIZED METHODS
 *******************************************************************************/
 
-unsigned int EstGoalCostMisplSq::get_est_goal_cost (std::shared_ptr<SearchNode> node) const {
-  unsigned int est_cost{ 0 };
-  const Board cboard{ node->get_board() };
-  for (size_t i = 0; i < cboard.get_num_board_squares(); i++) {
-    if (cboard.get_square_val(i) != this->get_goal_board().get_square_val(i))
-      est_cost++;
-  }
-  return est_cost;
+Board EstGoalCostInformedBase::get_goal_board () const {
+  return this->goal_board;
 }
 

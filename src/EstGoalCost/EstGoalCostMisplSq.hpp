@@ -19,7 +19,7 @@ purpose:  informed strategy: h(n) = number of misplaced tiles
 *******************************************************************************/
 
 #include "Board.hpp"
-#include "EstGoalCostBase.hpp"
+#include "EstGoalCostInformedBase.hpp"
 
 /*******************************************************************************
 * FORWARD DECLARES
@@ -31,7 +31,7 @@ class SearchNode;
 * INTERFACE
 *******************************************************************************/
 
-class EstGoalCostMisplSq : public EstGoalCostBase {
+class EstGoalCostMisplSq : public EstGoalCostInformedBase {
 
 public:
 
@@ -50,10 +50,6 @@ public:
 
   // base / derived methods
   unsigned int get_est_goal_cost (std::shared_ptr<SearchNode> node) const override;
-
-private:
-
-  const Board goal_board;
 
 };
 
