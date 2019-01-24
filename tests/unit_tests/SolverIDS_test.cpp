@@ -68,16 +68,13 @@ TEST_CASE("2-step solution") {
   constexpr size_t num_fq_nodes_popped{ 2 };
   constexpr size_t max_fq_size{ 1 };
   std::array<Board, num_steps> boards{
-    Board{"123804765"},
-    Board{"123840765"}
+    Board{"123804765"}, Board{"123840765"}
   };
   std::array<std::optional<MoveDir>, num_steps> move_dirs{
-    std::nullopt,
-    MoveDir::RIGHT
+    std::nullopt, MoveDir::RIGHT
   };
   std::array<unsigned int, num_steps> move_costs{
-    0,
-    4
+    0, 4
   };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverIDS solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
@@ -105,19 +102,13 @@ TEST_CASE("3-step solution") {
   constexpr size_t num_fq_nodes_popped{ 7 };
   constexpr size_t max_fq_size{ 6 };
   std::array<Board, num_steps> boards{
-    Board{"123804765"},
-    Board{"123840765"},
-    Board{"123845760"}
+    Board{"123804765"}, Board{"123840765"}, Board{"123845760"}
   };
   std::array<std::optional<MoveDir>, num_steps> move_dirs{
-    std::nullopt,
-    MoveDir::RIGHT,
-    MoveDir::DOWN
+    std::nullopt, MoveDir::RIGHT, MoveDir::DOWN
   };
   std::array<unsigned int, num_steps> move_costs{
-    0,
-    4,
-    5
+    0, 4, 5
   };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverIDS solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
