@@ -46,7 +46,7 @@ public:
   MoveGenerator& operator= (MoveGenerator&& rh) = delete;
 
   // specialized methods
-  std::list<Move> generate_moves (const Board&);
+  std::list<Move> generate_moves (const Board&) const;
 
 private:
 
@@ -54,7 +54,7 @@ private:
   std::shared_ptr<MoveCostIface> move_cost;
 
   // helper methods
-  std::list<MoveDir> generate_move_dirs (const Board&);
+  std::list<MoveDir> generate_move_dirs (const Board&) const;
 
 };
 

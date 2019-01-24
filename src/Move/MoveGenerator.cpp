@@ -33,7 +33,7 @@ MoveGenerator::MoveGenerator (std::shared_ptr<MoveCostIface> move_cost)
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::list<Move> MoveGenerator::generate_moves (const Board& board) {
+std::list<Move> MoveGenerator::generate_moves (const Board& board) const {
   std::list<Move> moves{};
   for (const auto& dir : this->generate_move_dirs(board)) {
     Board new_board{ board };
@@ -47,7 +47,7 @@ std::list<Move> MoveGenerator::generate_moves (const Board& board) {
 * HELPER METHODS
 *******************************************************************************/
 
-std::list<MoveDir> MoveGenerator::generate_move_dirs (const Board& board) {
+std::list<MoveDir> MoveGenerator::generate_move_dirs (const Board& board) const {
   size_t empty_sq_pos{ board.get_empty_square_pos() };
   std::list<MoveDir> move_dirs{};
   if (empty_sq_pos > 2)
