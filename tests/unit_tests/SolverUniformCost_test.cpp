@@ -30,9 +30,22 @@
 
 TEST_CASE("goal_board == start_board (1-step solution)") {
 
-  SolverUninformed<EstGoalCostUniform> solver{ Board{"123804765"}, Board{"123804765"}, std::make_shared<MoveCostSqVal>()};
-  auto solution{ solver.solve() };
   constexpr size_t num_steps{ 1 };
+  constexpr size_t path_cost{ 0 };
+  constexpr size_t num_fq_nodes_popped{ 1 };
+  constexpr size_t max_fq_size{ 1 };
+  std::array<Board, num_steps> boards{
+    Board{"123804765"}
+  };
+  std::array<std::optional<MoveDir>, num_steps> move_dirs{
+    std::nullopt
+  };
+  std::array<unsigned int, num_steps> move_costs{
+    0
+  };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  auto solution{ solver.solve() };
 
   SUBCASE("returns valid Solution") {
     CHECK_UNARY(solution.is_solved());
@@ -43,9 +56,6 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   }
 
   SUBCASE("contains correct steps") {
-    std::array<Board, num_steps> boards{ Board{"123804765"} };
-    std::array<std::optional<MoveDir>, num_steps> move_dirs{ std::nullopt };
-    std::array<unsigned int, num_steps> move_costs{ 0 };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
       CHECK_UNARY(node->get_board() == boards.at(i));
@@ -57,44 +67,49 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   }
 
   SUBCASE("get_total_cost()") {
-    CHECK_EQ(solution.get_total_cost(), 0);
+    CHECK_EQ(solution.get_total_cost(), path_cost);
   }
 
   SUBCASE("get_time_complexity()") {
-    CHECK_EQ(solution.get_time_complexity(), 1);
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   }
 
   SUBCASE("get_space_complexity()") {
-    CHECK_EQ(solution.get_space_complexity(), 1);
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
   }
 
 }
 
 TEST_CASE("2-step solution") {
-
-  Board BA{ "123804765" };
-  Board BB{ "123840765" };
-  auto move_cost{ std::make_shared<MoveCostSqVal>() };
   constexpr size_t num_steps{ 2 };
-  std::array<Board, num_steps> boards{ BA, BB };
-  std::array<std::optional<MoveDir>, num_steps> move_dirs{ std::nullopt, MoveDir::RIGHT };
-  std::array<unsigned int, num_steps> move_costs{ 0, 4 };
+  constexpr size_t path_cost{ 4 };
+  constexpr size_t num_fq_nodes_popped{ 4 };
+  constexpr size_t max_fq_size{ 5 };
+  std::array<Board, num_steps> boards{
+    Board{"123804765"},
+    Board{"123840765"}
+  };
+  std::array<std::optional<MoveDir>, num_steps> move_dirs{
+    std::nullopt,
+    MoveDir::RIGHT
+  };
+  std::array<unsigned int, num_steps> move_costs{
+    0,
+    4
+  };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  auto solution{ solver.solve() };
 
   SUBCASE("returns valid Solution") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
       CHECK_UNARY(node->get_board() == boards.at(i));
@@ -106,51 +121,52 @@ TEST_CASE("2-step solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_total_cost(), 4);
+    CHECK_EQ(solution.get_total_cost(), path_cost);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_time_complexity(), 4);
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BB, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_space_complexity(), 5);
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
   }
 
 }
 
 TEST_CASE("3-step solution") {
-
-  Board BA{ "123804765" };
-  Board BB{ "123840765" };
-  Board BC{ "123845760" };
-  auto move_cost{ std::make_shared<MoveCostSqVal>() };
   constexpr size_t num_steps{ 3 };
-  std::array<Board, num_steps> boards{ BA, BB, BC };
-  std::array<std::optional<MoveDir>, num_steps> move_dirs{ std::nullopt, MoveDir::RIGHT, MoveDir::DOWN };
-  std::array<unsigned int, num_steps> move_costs{ 0, 4, 5 };
+  constexpr size_t path_cost{ 9 };
+  constexpr size_t num_fq_nodes_popped{ 11 };
+  constexpr size_t max_fq_size{ 9 };
+  std::array<Board, num_steps> boards{
+    Board{"123804765"},
+    Board{"123840765"},
+    Board{"123845760"}
+  };
+  std::array<std::optional<MoveDir>, num_steps> move_dirs{
+    std::nullopt,
+    MoveDir::RIGHT,
+    MoveDir::DOWN
+  };
+  std::array<unsigned int, num_steps> move_costs{
+    0,
+    4,
+    5
+  };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  auto solution{ solver.solve() };
 
   SUBCASE("returns valid Solution") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
       CHECK_UNARY(node->get_board() == boards.at(i));
@@ -162,58 +178,50 @@ TEST_CASE("3-step solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_total_cost(), 9);
+    CHECK_EQ(solution.get_total_cost(), path_cost);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_time_complexity(), 11);
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BC, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_space_complexity(), 9);
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
   }
 
 }
 
 TEST_CASE("6-step \"easy\" solution") {
-
-  Board BA{ "134862705" };
-  Board BB{ "134802765" };
-  Board BC{ "134820765" };
-  Board BD{ "130824765" };
-  Board BE{ "103824765" };
-  Board BF{ "123804765" };
-  auto move_cost{ std::make_shared<MoveCostSqVal>() };
   constexpr size_t num_steps{ 6 };
-  std::array<Board, num_steps> boards{ BA, BB, BC, BD, BE, BF };
+  constexpr size_t path_cost{ 17 };
+  constexpr size_t num_fq_nodes_popped{ 24 };
+  constexpr size_t max_fq_size{ 16 };
+  std::array<Board, num_steps> boards{
+    Board{"134862705"}, Board{"134802765"},
+    Board{"134820765"}, Board{"130824765"},
+    Board{"103824765"}, Board{"123804765"}
+  };
   std::array<std::optional<MoveDir>, num_steps> move_dirs{
     std::nullopt, MoveDir::UP, MoveDir::RIGHT,
     MoveDir::UP, MoveDir::LEFT, MoveDir::DOWN
-
   };
-  std::array<unsigned int, num_steps> move_costs{ 0, 6, 2, 4, 3, 2 };
+  std::array<unsigned int, num_steps> move_costs{
+    0, 6, 2,
+    4, 3, 2
+  };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  auto solution{ solver.solve() };
 
   SUBCASE("returns valid Solution") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
   }
 
   SUBCASE("contains correct num steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
     CHECK_EQ(solution.get_num_steps(), num_steps);
   }
 
   SUBCASE("contains correct steps") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
     size_t i{0};
     auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
       CHECK_UNARY(node->get_board() == boards.at(i));
@@ -225,21 +233,70 @@ TEST_CASE("6-step \"easy\" solution") {
   }
 
   SUBCASE("get_total_cost()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_total_cost(), 17);
+    CHECK_EQ(solution.get_total_cost(), path_cost);
   }
 
   SUBCASE("get_time_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_time_complexity(), 24);
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   }
 
   SUBCASE("get_space_complexity()") {
-    SolverUninformed<EstGoalCostUniform> solver{ BA, BF, move_cost };
-    auto solution{ solver.solve() };
-    CHECK_EQ(solution.get_space_complexity(), 16);
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
+  }
+
+}
+
+TEST_CASE("\"medium\" solution") {
+  constexpr size_t num_steps{ 10 };
+  constexpr size_t num_fq_nodes_popped{ 141 };
+  constexpr size_t max_fq_size{ 92 };
+  std::array<Board, 2> boards{ Board{"281043765"}, Board{"123804765"} };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(1), move_cost};
+  auto solution{ solver.solve() };
+
+  SUBCASE("returns valid Solution") {
+    CHECK_UNARY(solution.is_solved());
+  }
+
+  SUBCASE("contains correct num steps") {
+    CHECK_EQ(solution.get_num_steps(), num_steps);
+  }
+
+  SUBCASE("get_time_complexity()") {
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
+  }
+
+  SUBCASE("get_space_complexity()") {
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
+  }
+
+}
+
+// passes, but takes about 30 sec to run
+TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
+  constexpr size_t num_steps{ 31 };
+  constexpr size_t num_fq_nodes_popped{ 181021 };
+  constexpr size_t max_fq_size{ 22378 };
+  std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
+  auto move_cost{ std::make_shared<MoveCostSqVal>() };
+  SolverUninformed<EstGoalCostUniform> solver{ boards.at(0), boards.at(1), move_cost};
+  auto solution{ solver.solve() };
+
+  SUBCASE("returns valid Solution") {
+    CHECK_UNARY(solution.is_solved());
+  }
+
+  SUBCASE("contains correct num steps") {
+    CHECK_EQ(solution.get_num_steps(), num_steps);
+  }
+
+  SUBCASE("get_time_complexity()") {
+    CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
+  }
+
+  SUBCASE("get_space_complexity()") {
+    CHECK_EQ(solution.get_space_complexity(), max_fq_size);
   }
 
 }
