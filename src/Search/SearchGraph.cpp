@@ -44,7 +44,6 @@ std::shared_ptr<SearchNode> SearchGraph::get_root () const {
 
 void SearchGraph::expand (const std::shared_ptr<SearchNode>& node,
     const std::function<void(std::shared_ptr<SearchNode>)>& act_on_expanded) {
-  std::list<std::shared_ptr<SearchNode>> children;
   for (const auto& move : this->move_gen->generate_moves(node->get_board()))
     act_on_expanded(this->create_child(move, node));
 }
