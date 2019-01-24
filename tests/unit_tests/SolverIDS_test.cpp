@@ -33,7 +33,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   auto solution{ solver.solve() };
   constexpr size_t num_steps{ 1 };
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     CHECK_UNARY(solution.is_solved());
   }
 
@@ -78,7 +78,7 @@ TEST_CASE("2-step solution") {
   std::array<std::optional<MoveDir>, num_steps> move_dirs{ std::nullopt, MoveDir::RIGHT };
   std::array<unsigned int, num_steps> move_costs{ 0, 4 };
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverIDS solver{ BA, BB, std::make_shared<MoveCostSqVal>()};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
@@ -133,7 +133,7 @@ TEST_CASE("3-step solution") {
   std::array<std::optional<MoveDir>, num_steps> move_dirs{ std::nullopt, MoveDir::RIGHT, MoveDir::DOWN };
   std::array<unsigned int, num_steps> move_costs{ 0, 4, 5 };
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverIDS solver{ BA, BC, std::make_shared<MoveCostSqVal>()};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
@@ -195,7 +195,7 @@ TEST_CASE("6-step \"easy\" solution") {
   };
   std::array<unsigned int, num_steps> move_costs{ 0, 6, 2, 4, 3, 2 };
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverIDS solver{ BA, BF, std::make_shared<MoveCostSqVal>()};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());

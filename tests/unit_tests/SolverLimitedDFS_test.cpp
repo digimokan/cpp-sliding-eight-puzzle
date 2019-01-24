@@ -32,7 +32,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
   auto solution{ solver.solve() };
   constexpr size_t num_steps{ 1 };
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     CHECK_UNARY(solution.is_solved());
   }
 
@@ -85,7 +85,7 @@ TEST_CASE("2-step solution" * doctest::skip(true)) {
     CHECK_UNARY(solution.not_solved());
   }
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverLimitedDFS solver{ BA, BB, std::make_shared<MoveCostSqVal>(), num_steps};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
@@ -149,7 +149,7 @@ TEST_CASE("3-step solution") {
     CHECK_EQ(solution.get_space_complexity(), 1);
   }
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverLimitedDFS solver{ BA, BC, std::make_shared<MoveCostSqVal>(), num_steps};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
@@ -220,7 +220,7 @@ TEST_CASE("6-step \"easy\" solution") {
     CHECK_EQ(solution.get_space_complexity(), 4);
   }
 
-  SUBCASE("returns valid optional<Solution>") {
+  SUBCASE("returns valid Solution") {
     SolverLimitedDFS solver{ BA, BF, std::make_shared<MoveCostSqVal>(), num_steps};
     auto solution{ solver.solve() };
     CHECK_UNARY(solution.is_solved());
