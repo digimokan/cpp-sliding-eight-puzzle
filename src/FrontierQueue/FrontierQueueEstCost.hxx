@@ -4,7 +4,7 @@ author:   digimokan
 date:     22 JAN 2019
 purpose:  priority queues based on est cost to goal (uniform, f(n), g(n), etc.)
 template param:
-          a type that implements EstGoalCostIface
+          T - a type that implements EstGoalCostIface
 *******************************************************************************/
 
 #ifndef FRONTIER_QUEUE_EST_COST_HXX
@@ -29,6 +29,20 @@ template param:
 *******************************************************************************/
 
 #include "FrontierQueueEstCost.hpp"
+
+/*******************************************************************************
+* CONSTRUCTORS
+*******************************************************************************/
+
+template <typename T>
+FrontierQueueEstCost<T>::FrontierQueueEstCost ()
+  : fq{}
+{ }
+
+template <typename T>
+FrontierQueueEstCost<T>::FrontierQueueEstCost (const Board& goal_board)
+  : fq{T{goal_board}}
+{ }
 
 /*******************************************************************************
 * BASE / DERIVED METHODS

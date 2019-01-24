@@ -4,7 +4,7 @@ author:   digimokan
 date:     22 JAN 2019
 purpose:  priority queues based on est cost to goal (uniform, f(n), g(n), etc.)
 template param:
-          a type that implements EstGoalCostIface
+          T - a type that implements EstGoalCostIface
 *******************************************************************************/
 
 #ifndef FRONTIER_QUEUE_EST_COST_HPP
@@ -22,6 +22,7 @@ template param:
 * USER INCLUDES
 *******************************************************************************/
 
+#include "Board.hpp"
 #include "FrontierQueueBase.hpp"
 #include "SearchNode.hpp"
 
@@ -35,7 +36,8 @@ class FrontierQueueEstCost : public FrontierQueueBase {
 public:
 
   // constructors
-  FrontierQueueEstCost () = default;
+  FrontierQueueEstCost ();
+  explicit FrontierQueueEstCost (const Board& goal_board);
 
   // destructor
   ~FrontierQueueEstCost () override = default;
@@ -49,7 +51,7 @@ public:
 private:
 
   // fields
-  std::priority_queue<std::shared_ptr<SearchNode>, std::vector<std::shared_ptr<SearchNode>>, T> fq;
+  std::priority_queue< std::shared_ptr<SearchNode>, std::vector<std::shared_ptr<SearchNode>>, T > fq;
 
   // base / derived methods
   void push_logic (std::shared_ptr<SearchNode> node) override;

@@ -19,7 +19,6 @@
 
 TEST_CASE("push(), pop()") {
 
-  FrontierQueueEstCost<EstGoalCostUniform> q{};
   Board BA{ Board{"012345678"} };
   Board BB{ Board{"102345678"} };
   Board BC{ Board{"312045678"} };
@@ -30,6 +29,7 @@ TEST_CASE("push(), pop()") {
   std::shared_ptr<SearchNode> SNC{ std::make_shared<SearchNode>(Move{BC, MoveDir::DOWN, 3}, SNA) };
   std::shared_ptr<SearchNode> SND{ std::make_shared<SearchNode>(Move{BD, MoveDir::RIGHT, 4}, SNC) };
   std::shared_ptr<SearchNode> SNE{ std::make_shared<SearchNode>(Move{BE, MoveDir::DOWN, 6}, SNC) };
+  FrontierQueueEstCost<EstGoalCostUniform> q{};
 
   SUBCASE("push SND, SNC, SNA, SNE, SNB") {
     q.push(SND);
