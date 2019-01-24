@@ -77,7 +77,7 @@ TEST_CASE("2-step solution") {
     0, 4
   };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost };
   size_t i{0};
   auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
     CHECK_UNARY(node->get_board() == boards.at(i));
@@ -113,7 +113,7 @@ TEST_CASE("3-step solution") {
     0, 4, 5
   };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost };
   size_t i{0};
   auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
     CHECK_UNARY(node->get_board() == boards.at(i));
@@ -154,7 +154,7 @@ TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
     4, 3, 2
   };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost};
+  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost };
   size_t i{0};
   auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
     CHECK_UNARY(node->get_board() == boards.at(i));
@@ -182,7 +182,7 @@ TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
   constexpr size_t max_fq_size{ 131 };
   std::array<Board, 2> boards{ Board{"281043765"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(1), move_cost};
+  SolverDFS solver{ boards.at(0), boards.at(1), move_cost };
   auto solution{ solver.solve() };
 
   CHECK_UNARY(solution.is_solved());
@@ -202,7 +202,7 @@ TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
   constexpr size_t max_fq_size{ 22378 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(1), move_cost};
+  SolverDFS solver{ boards.at(0), boards.at(1), move_cost };
   auto solution{ solver.solve() };
 
   CHECK_UNARY(solution.is_solved());
