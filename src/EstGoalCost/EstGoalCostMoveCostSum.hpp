@@ -44,9 +44,9 @@ public:
   ~EstGoalCostMoveCostSum () override = default;
 
   // operators
-  EstGoalCostMoveCostSum (const EstGoalCostMoveCostSum& in) = delete;
+  EstGoalCostMoveCostSum (const EstGoalCostMoveCostSum& in) = default;
   EstGoalCostMoveCostSum& operator= (const EstGoalCostMoveCostSum& rh) = delete;
-  EstGoalCostMoveCostSum (EstGoalCostMoveCostSum&& in) = delete;
+  EstGoalCostMoveCostSum (EstGoalCostMoveCostSum&& in) = default;
   EstGoalCostMoveCostSum& operator= (EstGoalCostMoveCostSum&& rh) = delete;
 
   // base / derived methods
