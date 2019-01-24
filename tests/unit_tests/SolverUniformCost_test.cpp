@@ -64,6 +64,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
 }
 
 TEST_CASE("2-step solution") {
+
   constexpr size_t num_steps{ 2 };
   constexpr size_t path_cost{ 4 };
   constexpr size_t num_fq_nodes_popped{ 4 };
@@ -132,6 +133,7 @@ TEST_CASE("3-step solution") {
 }
 
 TEST_CASE("6-step \"easy\" solution") {
+
   constexpr size_t num_steps{ 6 };
   constexpr size_t path_cost{ 17 };
   constexpr size_t num_fq_nodes_popped{ 24 };
@@ -170,6 +172,7 @@ TEST_CASE("6-step \"easy\" solution") {
 }
 
 TEST_CASE("\"medium\" solution") {
+
   constexpr size_t num_steps{ 10 };
   constexpr size_t num_fq_nodes_popped{ 141 };
   constexpr size_t max_fq_size{ 92 };
@@ -187,6 +190,7 @@ TEST_CASE("\"medium\" solution") {
 
 // passes, but takes about 30 sec to run
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
+
   constexpr size_t num_steps{ 31 };
   constexpr size_t num_fq_nodes_popped{ 181021 };
   constexpr size_t max_fq_size{ 22378 };

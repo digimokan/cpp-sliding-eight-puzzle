@@ -63,6 +63,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
 }
 
 TEST_CASE("2-step solution") {
+
   constexpr size_t num_steps{ 2 };
   constexpr size_t path_cost{ 4 };
   constexpr size_t num_fq_nodes_popped{ 2 };
@@ -97,6 +98,7 @@ TEST_CASE("2-step solution") {
 }
 
 TEST_CASE("3-step solution") {
+
   constexpr size_t num_steps{ 3 };
   constexpr size_t path_cost{ 9 };
   constexpr size_t num_fq_nodes_popped{ 7 };
