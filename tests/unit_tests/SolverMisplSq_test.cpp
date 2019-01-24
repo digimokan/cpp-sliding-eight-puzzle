@@ -174,6 +174,7 @@ TEST_CASE("6-step \"easy\" solution") {
 TEST_CASE("\"medium\" solution") {
 
   constexpr size_t num_steps{ 20 };
+  constexpr size_t path_cost{ 71 };
   constexpr size_t num_fq_nodes_popped{ 138 };
   constexpr size_t max_fq_size{ 103 };
   std::array<Board, 2> boards{ Board{"281043765"}, Board{"123804765"} };
@@ -183,6 +184,7 @@ TEST_CASE("\"medium\" solution") {
 
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
+  CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
 
@@ -191,6 +193,7 @@ TEST_CASE("\"medium\" solution") {
 TEST_CASE("\"hard\" solution") {
 
   constexpr size_t num_steps{ 109 };
+  constexpr size_t path_cost{ 478 };
   constexpr size_t num_fq_nodes_popped{ 611 };
   constexpr size_t max_fq_size{ 434 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
@@ -200,6 +203,7 @@ TEST_CASE("\"hard\" solution") {
 
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
+  CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
 

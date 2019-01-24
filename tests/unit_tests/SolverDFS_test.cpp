@@ -177,6 +177,7 @@ TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
 TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 10 };
+  constexpr size_t path_cost{ 17 };
   constexpr size_t num_fq_nodes_popped{ 213 };
   constexpr size_t max_fq_size{ 131 };
   std::array<Board, 2> boards{ Board{"281043765"}, Board{"123804765"} };
@@ -186,6 +187,7 @@ TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
+  CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
 
@@ -195,6 +197,7 @@ TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 31 };
+  constexpr size_t path_cost{ 17 };
   constexpr size_t num_fq_nodes_popped{ 181021 };
   constexpr size_t max_fq_size{ 22378 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
@@ -204,6 +207,7 @@ TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
+  CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
 
