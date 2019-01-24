@@ -45,31 +45,31 @@ TEST_CASE("get_est_goal_cost()") {
   D->add_child(F);
   EstGoalCostAstarOne est{ goal_board };
 
-  SUBCASE("A misplaced squares") {
+  SUBCASE("A estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(A), 9);
   }
 
-  SUBCASE("B misplaced squares") {
+  SUBCASE("B estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(B), 9);
   }
 
-  SUBCASE("C misplaced squares") {
+  SUBCASE("C estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(C), 12);
   }
 
-  SUBCASE("D misplaced squares") {
+  SUBCASE("D estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(D), 15);
   }
 
-  SUBCASE("E misplaced squares") {
+  SUBCASE("E estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(E), 18);
   }
 
-  SUBCASE("F misplaced squares") {
+  SUBCASE("F estimated cost") {
     CHECK_EQ(est.get_est_goal_cost(F), 17);
   }
 
-  SUBCASE("goal misplaced squares (should be 0)") {
+  SUBCASE("goal estimated cost (should be 0)") {
     CHECK_EQ(est.get_est_goal_cost(goal_node), 0);
   }
 
