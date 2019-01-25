@@ -99,7 +99,6 @@ private:
   void handle_a_star_1 ();
   void handle_a_star_2 ();
   void handle_a_star_3 ();
-  void handle_max_iterations ();
 
 };
 

@@ -43,7 +43,7 @@ purpose:  process program-input command-line tokens
 CmdLineTokenProcessor::CmdLineTokenProcessor (int argc, char* argv[])
   : program_name{*argv},
     tokens{argv, argv + argc},
-    short_opts{"hvcbdius123m:"},
+    short_opts{"hvcbdius123"},
     long_opts_map{
       {"help",                no_argument,       nullptr, 'h'},
       {"move-cost-sq-val",    no_argument,       nullptr, 'v'},
@@ -56,7 +56,6 @@ CmdLineTokenProcessor::CmdLineTokenProcessor (int argc, char* argv[])
       {"a-star-1",            no_argument,       nullptr, '1'},
       {"a-star-2",            no_argument,       nullptr, '2'},
       {"a-star-3",            no_argument,       nullptr, '3'},
-      {"max-iterations",      required_argument, nullptr, 'm'},
       {nullptr,               no_argument,       nullptr,  0}
     },
     move_cost{std::make_shared<MoveCostSqVal>()},
@@ -129,9 +128,6 @@ void CmdLineTokenProcessor::process_opt (int opt) {
     break;
   case '3':
     this->handle_a_star_3();
-    break;
-  case 'm':
-    this->handle_max_iterations();
     break;
   case '?':
     this->print_err_msg("missing option arg or bad option");
@@ -222,7 +218,7 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "  " << this->program_name << "  "
             << "-h" << std::endl;
   std::cout << "  " << this->program_name << "  "
-            << "[-v|-c]  [-b|-d|-i|-u|-s|-1|-2|-3]  [-m <num>]" << std::endl << "          "
+            << "[-v|-c]  [-b|-d|-i|-u|-s|-1|-2|-3]" << std::endl << "          "
             << "<start_board>  <goal_board>" << std::endl;
   std::cout << "ARGUMENTS" << std::endl;
   std::cout << "  " << "<start_board>" << std::endl << "      "
@@ -233,7 +229,7 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "  " << "-h, --help" << std::endl << "      "
             << "print this help message" << std::endl;
   std::cout << "  " << "-v, --move-cost-sq-val" << std::endl << "      "
-            << "set move cost to the value of the square moved (default)" << std::endl;
+            << "set move costs to the value of the square moved (default)" << std::endl;
   std::cout << "  " << "-c, --breadth-first" << std::endl << "      "
             << "set move costs to 1 (the traditional cost)" << std::endl;
   std::cout << "  " << "-b, --breadth-first" << std::endl << "      "
@@ -252,8 +248,6 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
             << "find solution using A*2 search (g(n) + h(n) sum manhattan dists)" << std::endl;
   std::cout << "  " << "-3, --a-star-3" << std::endl << "      "
             << "find solution using A*3 search (g(n) + h(n) custom heuristic)" << std::endl;
-  std::cout << "  " << "-m <num>, --max-iterations=<num>" << std::endl << "      "
-            << "specify max num iterations to use while searching" << std::endl;
   exit(exit_code);
 }
 
@@ -295,9 +289,5 @@ void CmdLineTokenProcessor::handle_a_star_2 () {
 
 void CmdLineTokenProcessor::handle_a_star_3 () {
   this->solver_type = SolverType::A_STAR_THREE;
-}
-
-void CmdLineTokenProcessor::handle_max_iterations () {
-  std::cout << "option m: " << optarg << std::endl;
 }
 
