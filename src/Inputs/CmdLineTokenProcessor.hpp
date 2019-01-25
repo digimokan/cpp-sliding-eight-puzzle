@@ -89,6 +89,8 @@ private:
 
   // option handlers
   void handle_help (int exit_code);
+  void handle_move_cost_sq_val ();
+  void handle_move_cost_const ();
   void handle_breadth_first ();
   void handle_depth_first ();
   void handle_iterative_deepening ();

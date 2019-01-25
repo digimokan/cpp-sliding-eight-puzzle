@@ -43,9 +43,11 @@ purpose:  process program-input command-line tokens
 CmdLineTokenProcessor::CmdLineTokenProcessor (int argc, char* argv[])
   : program_name{*argv},
     tokens{argv, argv + argc},
-    short_opts{"hbdius123m:"},
+    short_opts{"hvcbdius123m:"},
     long_opts_map{
       {"help",                no_argument,       nullptr, 'h'},
+      {"move-cost-sq-val",    no_argument,       nullptr, 'v'},
+      {"move-cost-const",     no_argument,       nullptr, 'c'},
       {"breadth-first",       no_argument,       nullptr, 'b'},
       {"depth-first",         no_argument,       nullptr, 'd'},
       {"iterative-deepening", no_argument,       nullptr, 'i'},
@@ -97,6 +99,12 @@ void CmdLineTokenProcessor::process_opt (int opt) {
   switch (opt) {
   case 'h':
     this->handle_help(EXIT_SUCCESS);
+    break;
+  case 'v':
+    this->handle_move_cost_sq_val();
+    break;
+  case 'c':
+    this->handle_move_cost_const();
     break;
   case 'b':
     this->handle_breadth_first();
@@ -206,7 +214,7 @@ std::shared_ptr<SolverIface> CmdLineTokenProcessor::make_solver_from_tokens () {
 }
 
 /*******************************************************************************
-* STATIC OPTION HANDLERS
+* OPTION HANDLERS
 *******************************************************************************/
 
 void CmdLineTokenProcessor::handle_help (int exit_code) {
@@ -214,7 +222,7 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "  " << this->program_name << "  "
             << "-h" << std::endl;
   std::cout << "  " << this->program_name << "  "
-            << "[-b|-d|-i|-u|-s|-1|-2|-3]  [-m <num>]" << std::endl << "          "
+            << "[-v|-c]  [-b|-d|-i|-u|-s|-1|-2|-3]  [-m <num>]" << std::endl << "          "
             << "<start_board>  <goal_board>" << std::endl;
   std::cout << "ARGUMENTS" << std::endl;
   std::cout << "  " << "<start_board>" << std::endl << "      "
@@ -224,6 +232,10 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "OPTIONS" << std::endl;
   std::cout << "  " << "-h, --help" << std::endl << "      "
             << "print this help message" << std::endl;
+  std::cout << "  " << "-v, --move-cost-sq-val" << std::endl << "      "
+            << "set move cost to the value of the square moved (default)" << std::endl;
+  std::cout << "  " << "-c, --breadth-first" << std::endl << "      "
+            << "set move costs to 1 (the traditional cost)" << std::endl;
   std::cout << "  " << "-b, --breadth-first" << std::endl << "      "
             << "find solution using breadth-first search (default)" << std::endl;
   std::cout << "  " << "-d, --depth-first" << std::endl << "      "
@@ -243,6 +255,14 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "  " << "-m <num>, --max-iterations=<num>" << std::endl << "      "
             << "specify max num iterations to use while searching" << std::endl;
   exit(exit_code);
+}
+
+void CmdLineTokenProcessor::handle_move_cost_sq_val () {
+  this->move_cost = std::make_shared<MoveCostSqVal>();
+}
+
+void CmdLineTokenProcessor::handle_move_cost_const () {
+  this->move_cost = std::make_shared<MoveCostConst>();
 }
 
 void CmdLineTokenProcessor::handle_breadth_first () {
