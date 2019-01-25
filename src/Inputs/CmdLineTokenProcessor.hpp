@@ -1,12 +1,12 @@
 /*******************************************************************************
-module:   CmdLineArgProcessor
+module:   CmdLineTokenProcessor
 author:   digimokan
 date:     12 JAN 2019
-purpose:  process command-line inputs
+purpose:  process program-input command-line tokens
 *******************************************************************************/
 
-#ifndef CMD_LINE_ARG_PROCESSOR_HPP
-#define CMD_LINE_ARG_PROCESSOR_HPP 1
+#ifndef CMD_LINE_TOKEN_PROCESSOR_HPP
+#define CMD_LINE_TOKEN_PROCESSOR_HPP 1
 
 /*******************************************************************************
 * SYSTEM INCLUDES
@@ -34,25 +34,25 @@ class SolverIface;
 * INTERFACE
 *******************************************************************************/
 
-class CmdLineArgProcessor {
+class CmdLineTokenProcessor {
 
 public:
 
   // constructors
-  CmdLineArgProcessor () = delete;
-  CmdLineArgProcessor (int argc, char* argv[]);
+  CmdLineTokenProcessor () = delete;
+  CmdLineTokenProcessor (int argc, char* argv[]);
 
   // destructor
-  ~CmdLineArgProcessor () = default;
+  ~CmdLineTokenProcessor () = default;
 
   // operators
-  CmdLineArgProcessor (const CmdLineArgProcessor& in) = delete;
-  CmdLineArgProcessor& operator= (const CmdLineArgProcessor& rh) = delete;
-  CmdLineArgProcessor (CmdLineArgProcessor&& in) = delete;
-  CmdLineArgProcessor& operator= (CmdLineArgProcessor&& rh) = delete;
+  CmdLineTokenProcessor (const CmdLineTokenProcessor& in) = delete;
+  CmdLineTokenProcessor& operator= (const CmdLineTokenProcessor& rh) = delete;
+  CmdLineTokenProcessor (CmdLineTokenProcessor&& in) = delete;
+  CmdLineTokenProcessor& operator= (CmdLineTokenProcessor&& rh) = delete;
 
   // specialized methods
-  std::shared_ptr<SolverIface> process_args ();
+  std::shared_ptr<SolverIface> create_solver ();
 
 private:
 
@@ -85,7 +85,7 @@ private:
   void process_non_option_args ();
   void process_opt (int opt);
   void print_err_msg (const std::string& err_msg);
-  std::shared_ptr<SolverIface> make_solver ();
+  std::shared_ptr<SolverIface> make_solver_from_tokens();
 
   // option handlers
   void handle_help (int exit_code);
@@ -105,5 +105,5 @@ private:
 * END
 *******************************************************************************/
 
-#endif // CMD_LINE_ARG_PROCESSOR_HPP
+#endif // CMD_LINE_TOKEN_PROCESSOR_HPP
 

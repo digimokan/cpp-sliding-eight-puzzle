@@ -1,8 +1,8 @@
 /*******************************************************************************
-module:   CmdLineArgProcessor
+module:   CmdLineTokenProcessor
 author:   digimokan
 date:     12 JAN 2019
-purpose:  process command-line inputs
+purpose:  process program-input command-line tokens
 *******************************************************************************/
 
 /*******************************************************************************
@@ -20,7 +20,7 @@ purpose:  process command-line inputs
 * USER INCLUDES
 *******************************************************************************/
 
-#include "CmdLineArgProcessor.hpp"
+#include "CmdLineTokenProcessor.hpp"
 #include "EstGoalCostAstarOne.hpp"
 #include "EstGoalCostAstarThree.hpp"
 #include "EstGoalCostAstarTwo.hpp"
@@ -40,7 +40,7 @@ purpose:  process command-line inputs
 * CONSTRUCTORS
 *******************************************************************************/
 
-CmdLineArgProcessor::CmdLineArgProcessor (int argc, char* argv[])
+CmdLineTokenProcessor::CmdLineTokenProcessor (int argc, char* argv[])
   : program_name{*argv},
     tokens{argv, argv + argc},
     short_opts{"hbdius123m:"},
@@ -65,17 +65,17 @@ CmdLineArgProcessor::CmdLineArgProcessor (int argc, char* argv[])
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::shared_ptr<SolverIface> CmdLineArgProcessor::process_args () {
+std::shared_ptr<SolverIface> CmdLineTokenProcessor::create_solver () {
   this->process_options();
   this->process_non_option_args();
-  return this->make_solver();
+  return this->make_solver_from_tokens();
 }
 
 /*******************************************************************************
 * HELPER METHODS
 *******************************************************************************/
 
-void CmdLineArgProcessor::process_options () {
+void CmdLineTokenProcessor::process_options () {
   while (true) {
     const int opt = getopt_long(tokens.size(), tokens.data(), this->short_opts, this->long_opts_map.data(), nullptr);
     if (opt == -1)
@@ -84,7 +84,7 @@ void CmdLineArgProcessor::process_options () {
   }
 }
 
-void CmdLineArgProcessor::process_non_option_args () {
+void CmdLineTokenProcessor::process_non_option_args () {
   if ((tokens.size() - optind) != 2) {
     this->print_err_msg("missing non-option argument");
   } else {
@@ -95,7 +95,7 @@ void CmdLineArgProcessor::process_non_option_args () {
   }
 }
 
-void CmdLineArgProcessor::process_opt (int opt) {
+void CmdLineTokenProcessor::process_opt (int opt) {
   switch (opt) {
   case 'h':
     this->handle_help(EXIT_SUCCESS);
@@ -136,12 +136,12 @@ void CmdLineArgProcessor::process_opt (int opt) {
   }
 }
 
-void CmdLineArgProcessor::print_err_msg (const std::string& err_msg) {
+void CmdLineTokenProcessor::print_err_msg (const std::string& err_msg) {
   std::cerr << "ERROR: " << err_msg << std::endl << std::endl;
   this->handle_help(EXIT_FAILURE);
 }
 
-std::shared_ptr<SolverIface> CmdLineArgProcessor::make_solver () {
+std::shared_ptr<SolverIface> CmdLineTokenProcessor::make_solver_from_tokens () {
   std::shared_ptr<SolverIface> solver;
   switch (this->solver_type) {
     case SolverType::BREADTH_FIRST:
@@ -211,7 +211,7 @@ std::shared_ptr<SolverIface> CmdLineArgProcessor::make_solver () {
 * STATIC OPTION HANDLERS
 *******************************************************************************/
 
-void CmdLineArgProcessor::handle_help (int exit_code) {
+void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "USAGE" << std::endl;
   std::cout << "  " << this->program_name << "  "
             << "-h" << std::endl;
@@ -247,47 +247,47 @@ void CmdLineArgProcessor::handle_help (int exit_code) {
   exit(exit_code);
 }
 
-void CmdLineArgProcessor::handle_breadth_first () {
+void CmdLineTokenProcessor::handle_breadth_first () {
   std::cout << "option b" << std::endl;
   this->solver_type = SolverType::BREADTH_FIRST;
 }
 
-void CmdLineArgProcessor::handle_depth_first () {
+void CmdLineTokenProcessor::handle_depth_first () {
   std::cout << "option d" << std::endl;
   this->solver_type = SolverType::DEPTH_FIRST;
 }
 
-void CmdLineArgProcessor::handle_iterative_deepening () {
+void CmdLineTokenProcessor::handle_iterative_deepening () {
   std::cout << "option i" << std::endl;
   this->solver_type = SolverType::ITERATIVE_DEEPENING;
 }
 
-void CmdLineArgProcessor::handle_uniform_cost () {
+void CmdLineTokenProcessor::handle_uniform_cost () {
   std::cout << "option u" << std::endl;
   this->solver_type = SolverType::UNIFORM_COST;
 }
 
-void CmdLineArgProcessor::handle_best_first () {
+void CmdLineTokenProcessor::handle_best_first () {
   std::cout << "option s" << std::endl;
   this->solver_type = SolverType::BEST_FIRST;
 }
 
-void CmdLineArgProcessor::handle_a_star_1 () {
+void CmdLineTokenProcessor::handle_a_star_1 () {
   std::cout << "option 1" << std::endl;
   this->solver_type = SolverType::A_STAR_ONE;
 }
 
-void CmdLineArgProcessor::handle_a_star_2 () {
+void CmdLineTokenProcessor::handle_a_star_2 () {
   std::cout << "option 2" << std::endl;
   this->solver_type = SolverType::A_STAR_TWO;
 }
 
-void CmdLineArgProcessor::handle_a_star_3 () {
+void CmdLineTokenProcessor::handle_a_star_3 () {
   std::cout << "option 3" << std::endl;
   this->solver_type = SolverType::A_STAR_THREE;
 }
 
-void CmdLineArgProcessor::handle_max_iterations () {
+void CmdLineTokenProcessor::handle_max_iterations () {
   std::cout << "option m: " << optarg << std::endl;
 }
 
