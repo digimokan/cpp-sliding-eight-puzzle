@@ -99,7 +99,6 @@ TEST_CASE("2-step solution") {
 TEST_CASE("3-step solution") {
 
   constexpr size_t num_steps{ 3 };
-  constexpr size_t short_depth{ num_steps - 2 };
   constexpr size_t path_cost{ 9 };
   constexpr size_t num_fq_nodes_popped{ 3 };
   constexpr size_t max_fq_size{ 4 };
@@ -136,7 +135,6 @@ TEST_CASE("3-step solution") {
 TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 6 };
-  constexpr size_t short_depth{ num_steps - 2 };
   constexpr size_t path_cost{ 17 };
   constexpr size_t num_fq_nodes_popped{ 25 };
   constexpr size_t max_fq_size{ 18 };
