@@ -88,8 +88,6 @@ void CmdLineTokenProcessor::process_non_option_args () {
   if ((tokens.size() - optind) != 2) {
     this->print_err_msg("missing non-option argument");
   } else {
-    std::cout << "<start_board>: " << tokens[optind] << std::endl;
-    std::cout << "<goal_board>: " << tokens[optind + 1] << std::endl;
     this->start_board = Board{ tokens[optind] };
     this->goal_board = Board{ tokens[optind + 1] };
   }
@@ -248,42 +246,34 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
 }
 
 void CmdLineTokenProcessor::handle_breadth_first () {
-  std::cout << "option b" << std::endl;
   this->solver_type = SolverType::BREADTH_FIRST;
 }
 
 void CmdLineTokenProcessor::handle_depth_first () {
-  std::cout << "option d" << std::endl;
   this->solver_type = SolverType::DEPTH_FIRST;
 }
 
 void CmdLineTokenProcessor::handle_iterative_deepening () {
-  std::cout << "option i" << std::endl;
   this->solver_type = SolverType::ITERATIVE_DEEPENING;
 }
 
 void CmdLineTokenProcessor::handle_uniform_cost () {
-  std::cout << "option u" << std::endl;
   this->solver_type = SolverType::UNIFORM_COST;
 }
 
 void CmdLineTokenProcessor::handle_best_first () {
-  std::cout << "option s" << std::endl;
   this->solver_type = SolverType::BEST_FIRST;
 }
 
 void CmdLineTokenProcessor::handle_a_star_1 () {
-  std::cout << "option 1" << std::endl;
   this->solver_type = SolverType::A_STAR_ONE;
 }
 
 void CmdLineTokenProcessor::handle_a_star_2 () {
-  std::cout << "option 2" << std::endl;
   this->solver_type = SolverType::A_STAR_TWO;
 }
 
 void CmdLineTokenProcessor::handle_a_star_3 () {
-  std::cout << "option 3" << std::endl;
   this->solver_type = SolverType::A_STAR_THREE;
 }
 

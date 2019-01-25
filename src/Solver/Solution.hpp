@@ -54,6 +54,7 @@ public:
   size_t get_time_complexity () const;
   size_t get_space_complexity () const;
   void for_each_step (const std::function<void(std::shared_ptr<SearchNode>)>&) const;
+  void print () const;
 
 private:
 
@@ -65,6 +66,12 @@ private:
 
   // helper methods
   void build_solution_steps (const std::shared_ptr<SearchNode>& goal_node);
+  void print_null_solution () const;
+  void print_solution_steps () const;
+  void print_solution_stats () const;
+  void print_node_depth (const std::shared_ptr<SearchNode>& node) const;
+  void print_node_move_direction (const std::shared_ptr<SearchNode>& node) const;
+  void print_node_cost (const std::shared_ptr<SearchNode>& node) const;
 
 };
 

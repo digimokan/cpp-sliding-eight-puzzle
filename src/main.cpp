@@ -21,6 +21,7 @@ int main (int argc, char* argv[]) {
   CmdLineTokenProcessor token_proc{ argc, argv };
   std::shared_ptr<SolverIface> solver{ token_proc.create_solver() };
   Solution solution{ solver->solve() };
+  solution.print();
   return (0);
 }
 
