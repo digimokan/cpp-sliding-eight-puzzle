@@ -14,6 +14,7 @@ purpose:  process command-line inputs
 
 #include <getopt.h>
 #include <string>
+#include <vector>
 
 /*******************************************************************************
 * INTERFACE
@@ -25,9 +26,10 @@ public:
 
   // constructors
   CmdLineArgProcessor () = delete;
+  CmdLineArgProcessor (int argc, char* argv[]);
 
   // destructor
-  ~CmdLineArgProcessor () = delete;
+  ~CmdLineArgProcessor () = default;
 
   // operators
   CmdLineArgProcessor (const CmdLineArgProcessor& in) = delete;
@@ -35,33 +37,35 @@ public:
   CmdLineArgProcessor (CmdLineArgProcessor&& in) = delete;
   CmdLineArgProcessor& operator= (CmdLineArgProcessor&& rh) = delete;
 
-  // static methods
-  static void process_args (int argc, char* const* argv);
+  // specialized methods
+  void process_args ();
 
 private:
 
-  // static fields
-  static const char* short_opts;
-  static const option long_opts_map[];
-  static const char* program_name;
+  // fields
+  const char* program_name;
+  int num_tokens;
+  char** tokens;
+  const char* short_opts;
+  const std::vector<option> long_opts_map;
 
-  // static helper methods
-  static void process_options (int argc, char* const* argv);
-  static void process_non_option_args (int argc, char* const* argv);
-  static void process_opt (int opt);
-  static void print_err_msg (const std::string& err_msg);
+  // helper methods
+  void process_options ();
+  void process_non_option_args ();
+  void process_opt (int opt);
+  void print_err_msg (const std::string& err_msg);
 
-  // static option handlers
-  static void handle_help (int exit_code);
-  static void handle_breadth_first ();
-  static void handle_depth_first ();
-  static void handle_iterative_deepening ();
-  static void handle_uniform_cost ();
-  static void handle_best_first ();
-  static void handle_a_star_1 ();
-  static void handle_a_star_2 ();
-  static void handle_a_star_3 ();
-  static void handle_max_iterations ();
+  // option handlers
+  void handle_help (int exit_code);
+  void handle_breadth_first ();
+  void handle_depth_first ();
+  void handle_iterative_deepening ();
+  void handle_uniform_cost ();
+  void handle_best_first ();
+  void handle_a_star_1 ();
+  void handle_a_star_2 ();
+  void handle_a_star_3 ();
+  void handle_max_iterations ();
 
 };
 

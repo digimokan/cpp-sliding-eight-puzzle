@@ -1,7 +1,8 @@
-#include "Inputs/CmdLineArgProcessor.hpp"
+#include "CmdLineArgProcessor.hpp"
 
-int main (int argc, char* const* argv) {
-  CmdLineArgProcessor::process_args(argc, argv);
+int main (int argc, char* argv[]) {
+  CmdLineArgProcessor token_proc{ argc, argv };
+  token_proc.process_args();
   return (0);
 }
 
