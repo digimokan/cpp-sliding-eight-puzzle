@@ -44,8 +44,7 @@ private:
 
   // fields
   const char* program_name;
-  int num_tokens;
-  char** tokens;
+  std::vector<char*> tokens;
   const char* short_opts;
   const std::vector<option> long_opts_map;
 

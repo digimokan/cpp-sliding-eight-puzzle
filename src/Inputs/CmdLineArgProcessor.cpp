@@ -26,9 +26,8 @@ purpose:  process command-line inputs
 *******************************************************************************/
 
 CmdLineArgProcessor::CmdLineArgProcessor (int argc, char* argv[])
-  : program_name{argv[0]},
-    num_tokens{argc},
-    tokens{argv},
+  : program_name{*argv},
+    tokens{argv, argv + argc},
     short_opts{"hbdius123m:"},
     long_opts_map{
       {"help",                no_argument,       nullptr, 'h'},
@@ -60,7 +59,7 @@ void CmdLineArgProcessor::process_args () {
 
 void CmdLineArgProcessor::process_options () {
   while (true) {
-    const int opt = getopt_long(num_tokens, tokens, this->short_opts, this->long_opts_map.data(), nullptr);
+    const int opt = getopt_long(tokens.size(), tokens.data(), this->short_opts, this->long_opts_map.data(), nullptr);
     if (opt == -1)
       break;
     this->process_opt(opt);
@@ -68,7 +67,7 @@ void CmdLineArgProcessor::process_options () {
 }
 
 void CmdLineArgProcessor::process_non_option_args () {
-  if ((num_tokens - optind) != 2) {
+  if ((tokens.size() - optind) != 2) {
     this->print_err_msg("missing non-option argument");
   } else {
     std::cout << "<start_board>: " << tokens[optind] << std::endl;
