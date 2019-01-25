@@ -9,6 +9,7 @@ purpose:  process command-line inputs
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <cassert>
 #include <cstdlib>
 #include <getopt.h>
 #include <iostream>
@@ -20,6 +21,20 @@ purpose:  process command-line inputs
 *******************************************************************************/
 
 #include "CmdLineArgProcessor.hpp"
+#include "EstGoalCostAstarOne.hpp"
+#include "EstGoalCostAstarThree.hpp"
+#include "EstGoalCostAstarTwo.hpp"
+#include "EstGoalCostMisplSq.hpp"
+#include "EstGoalCostUniform.hpp"
+#include "MoveCostConst.hpp"
+#include "MoveCostIface.hpp"
+#include "MoveCostSqVal.hpp"
+#include "SolverBFS.hpp"
+#include "SolverDFS.hpp"
+#include "SolverIDS.hpp"
+#include "SolverIface.hpp"
+#include "SolverInformed.hpp"
+#include "SolverUninformed.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
@@ -40,17 +55,20 @@ CmdLineArgProcessor::CmdLineArgProcessor (int argc, char* argv[])
       {"a-star-2",            no_argument,       nullptr, '2'},
       {"a-star-3",            no_argument,       nullptr, '3'},
       {"max-iterations",      required_argument, nullptr, 'm'},
-      {nullptr, no_argument, nullptr, 0}
-    }
+      {nullptr,               no_argument,       nullptr,  0}
+    },
+    move_cost{std::make_shared<MoveCostSqVal>()},
+    solver_type{SolverType::BREADTH_FIRST}
 { }
 
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-void CmdLineArgProcessor::process_args () {
+std::shared_ptr<SolverIface> CmdLineArgProcessor::process_args () {
   this->process_options();
   this->process_non_option_args();
+  return this->make_solver();
 }
 
 /*******************************************************************************
@@ -72,6 +90,8 @@ void CmdLineArgProcessor::process_non_option_args () {
   } else {
     std::cout << "<start_board>: " << tokens[optind] << std::endl;
     std::cout << "<goal_board>: " << tokens[optind + 1] << std::endl;
+    this->start_board = Board{ tokens[optind] };
+    this->goal_board = Board{ tokens[optind + 1] };
   }
 }
 
@@ -121,6 +141,72 @@ void CmdLineArgProcessor::print_err_msg (const std::string& err_msg) {
   this->handle_help(EXIT_FAILURE);
 }
 
+std::shared_ptr<SolverIface> CmdLineArgProcessor::make_solver () {
+  std::shared_ptr<SolverIface> solver;
+  switch (this->solver_type) {
+    case SolverType::BREADTH_FIRST:
+      solver = std::make_shared<SolverBFS>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::DEPTH_FIRST:
+      solver = std::make_shared<SolverDFS>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::ITERATIVE_DEEPENING:
+      solver = std::make_shared<SolverIDS>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::UNIFORM_COST:
+      solver = std::make_shared<SolverUninformed<EstGoalCostUniform>>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::BEST_FIRST:
+      solver = std::make_shared<SolverInformed<EstGoalCostMisplSq>>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::A_STAR_ONE:
+      solver = std::make_shared<SolverInformed<EstGoalCostAstarOne>>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::A_STAR_TWO:
+      solver = std::make_shared<SolverInformed<EstGoalCostAstarTwo>>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    case SolverType::A_STAR_THREE:
+      solver = std::make_shared<SolverInformed<EstGoalCostAstarThree>>(
+        this->start_board,
+        this->goal_board,
+        this->move_cost
+      );
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  return solver;
+}
+
 /*******************************************************************************
 * STATIC OPTION HANDLERS
 *******************************************************************************/
@@ -163,34 +249,42 @@ void CmdLineArgProcessor::handle_help (int exit_code) {
 
 void CmdLineArgProcessor::handle_breadth_first () {
   std::cout << "option b" << std::endl;
+  this->solver_type = SolverType::BREADTH_FIRST;
 }
 
 void CmdLineArgProcessor::handle_depth_first () {
   std::cout << "option d" << std::endl;
+  this->solver_type = SolverType::DEPTH_FIRST;
 }
 
 void CmdLineArgProcessor::handle_iterative_deepening () {
   std::cout << "option i" << std::endl;
+  this->solver_type = SolverType::ITERATIVE_DEEPENING;
 }
 
 void CmdLineArgProcessor::handle_uniform_cost () {
   std::cout << "option u" << std::endl;
+  this->solver_type = SolverType::UNIFORM_COST;
 }
 
 void CmdLineArgProcessor::handle_best_first () {
   std::cout << "option s" << std::endl;
+  this->solver_type = SolverType::BEST_FIRST;
 }
 
 void CmdLineArgProcessor::handle_a_star_1 () {
   std::cout << "option 1" << std::endl;
+  this->solver_type = SolverType::A_STAR_ONE;
 }
 
 void CmdLineArgProcessor::handle_a_star_2 () {
   std::cout << "option 2" << std::endl;
+  this->solver_type = SolverType::A_STAR_TWO;
 }
 
 void CmdLineArgProcessor::handle_a_star_3 () {
   std::cout << "option 3" << std::endl;
+  this->solver_type = SolverType::A_STAR_THREE;
 }
 
 void CmdLineArgProcessor::handle_max_iterations () {

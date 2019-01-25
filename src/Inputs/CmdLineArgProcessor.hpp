@@ -13,8 +13,22 @@ purpose:  process command-line inputs
 *******************************************************************************/
 
 #include <getopt.h>
+#include <memory>
 #include <string>
 #include <vector>
+
+/*******************************************************************************
+* USER INCLUDES
+*******************************************************************************/
+
+#include "Board.hpp"
+
+/*******************************************************************************
+* FORWARD DECLARES
+*******************************************************************************/
+
+class MoveCostIface;
+class SolverIface;
 
 /*******************************************************************************
 * INTERFACE
@@ -38,21 +52,40 @@ public:
   CmdLineArgProcessor& operator= (CmdLineArgProcessor&& rh) = delete;
 
   // specialized methods
-  void process_args ();
+  std::shared_ptr<SolverIface> process_args ();
 
 private:
 
-  // fields
+  // types
+  enum class SolverType {
+    BREADTH_FIRST,
+    DEPTH_FIRST,
+    ITERATIVE_DEEPENING,
+    UNIFORM_COST,
+    BEST_FIRST,
+    A_STAR_ONE,
+    A_STAR_TWO,
+    A_STAR_THREE
+  };
+
+  // cmd-line input fields
   const char* program_name;
   std::vector<char*> tokens;
   const char* short_opts;
   const std::vector<option> long_opts_map;
+
+  // processing/return fields
+  Board start_board;
+  Board goal_board;
+  std::shared_ptr<MoveCostIface> move_cost;
+  SolverType solver_type;
 
   // helper methods
   void process_options ();
   void process_non_option_args ();
   void process_opt (int opt);
   void print_err_msg (const std::string& err_msg);
+  std::shared_ptr<SolverIface> make_solver ();
 
   // option handlers
   void handle_help (int exit_code);
