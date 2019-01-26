@@ -110,28 +110,30 @@ uint8_t Board::get_square_val (size_t board_pos) const {
 }
 
 size_t Board::get_swap_pos (MoveDir move_dir) const {
+  size_t swap_pos{};
   size_t empty_sq_pos{ this->get_empty_square_pos() };
   switch (move_dir) {
   case MoveDir::UP:
     assert(empty_sq_pos > 2);
-    return (empty_sq_pos - 3);
+    swap_pos = empty_sq_pos - 3;
     break;
   case MoveDir::DOWN:
     assert(empty_sq_pos < 6);
-    return (empty_sq_pos + 3);
+    swap_pos = empty_sq_pos + 3;
     break;
   case MoveDir::LEFT:
     assert((empty_sq_pos % 3) != 0);
-    return (empty_sq_pos - 1);
+    swap_pos = empty_sq_pos - 1;
     break;
   case MoveDir::RIGHT:
     assert((empty_sq_pos % 3) != 2);
-    return (empty_sq_pos + 1);
+    swap_pos = empty_sq_pos + 1;
     break;
   default:
     assert(false);
     break;
   }
+  return swap_pos;
 }
 
 void Board::swap_squares (size_t pos_one, size_t pos_two) {
