@@ -114,7 +114,6 @@ void FrontierQueueBase::prune_removed_nodes () {
     auto next_node{ this->peek_next_logic() };
     if (this->nodes_on_queue.contains(next_node))
       break;
-    assert(this->board_node_lookup.not_contains(next_node->get_board()));
     this->pop_logic();
   }
 }
