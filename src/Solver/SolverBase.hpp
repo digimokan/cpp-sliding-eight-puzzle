@@ -12,6 +12,7 @@ purpose:  base SolverIface impl class with common methods
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <cstddef>
 #include <memory>
 #include <optional>
 
@@ -59,7 +60,7 @@ public:
 protected:
 
   // constructors
-  explicit SolverBase (Board start_board, Board goal_board, const std::shared_ptr<MoveCostIface>& move_cost, std::shared_ptr<FrontierQueueIface> frontier_queue);
+  explicit SolverBase (Board start_board, Board goal_board, const std::shared_ptr<MoveCostIface>& move_cost, std::shared_ptr<FrontierQueueIface> frontier_queue, std::optional<size_t> max_search_depth = std::nullopt);
 
   // base / derived methods
   virtual void act_on_expanded_node (const std::shared_ptr<SearchNode>& enode) = 0;
@@ -67,6 +68,7 @@ protected:
   // specialized methods
   void expand_frontier (const std::shared_ptr<SearchNode>& frontier_node);
   void fq_push (std::shared_ptr<SearchNode>);
+  void push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node);
   std::shared_ptr<SearchNode> fq_pop ();
   bool fq_contains (const Board&) const;
   bool fq_not_contains (const Board&) const;
@@ -93,6 +95,7 @@ private:
   std::shared_ptr<FrontierQueueIface> fq;
   BoardMap search_history;
   std::optional<std::shared_ptr<SearchNode>> goal_node;
+  const std::optional<size_t> max_search_depth;
 
 };
 

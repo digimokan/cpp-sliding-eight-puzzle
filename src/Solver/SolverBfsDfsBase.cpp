@@ -28,8 +28,7 @@ SolverBfsDfsBase::SolverBfsDfsBase (Board start_board, Board goal_board,
       const std::shared_ptr<MoveCostIface>& move_cost,
       std::shared_ptr<FrontierQueueIface> frontier_queue,
       std::optional<size_t> max_search_depth)
-  : SolverBase{start_board, goal_board, move_cost, std::move(frontier_queue)},
-    max_search_depth{max_search_depth}
+  : SolverBase{start_board, goal_board, move_cost, std::move(frontier_queue), max_search_depth}
 { }
 
 /*******************************************************************************
@@ -74,12 +73,5 @@ void SolverBfsDfsBase::keep_lowest_cost_fq_node (const std::shared_ptr<SearchNod
     this->fq_remove_node(fq_node);
     this->fq_push(exp_node);
   }
-}
-
-void SolverBfsDfsBase::push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node) {
-  if (! this->max_search_depth.has_value())
-    this->fq_push(exp_node);
-  else if (exp_node->get_depth() < this->max_search_depth.value())
-    this->fq_push(exp_node);
 }
 

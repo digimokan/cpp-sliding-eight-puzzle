@@ -31,11 +31,13 @@ purpose:  base SolverIface impl class with common methods
 
 SolverBase::SolverBase (Board start_board, Board goal_board,
     const std::shared_ptr<MoveCostIface>& move_cost,
-    std::shared_ptr<FrontierQueueIface> frontier_queue)
+    std::shared_ptr<FrontierQueueIface> frontier_queue,
+    std::optional<size_t> max_search_depth)
   : goal_board{goal_board},
     search_graph{std::make_shared<SearchGraph>(std::make_shared<SearchNode>(start_board), move_cost)},
     fq{std::move(frontier_queue)},
-    goal_node{std::nullopt} {
+    goal_node{std::nullopt},
+    max_search_depth{max_search_depth} {
   this->fq_push(this->search_graph->get_root());
 }
 
@@ -50,6 +52,13 @@ void SolverBase::expand_frontier (const std::shared_ptr<SearchNode>& frontier_no
 
 void SolverBase::fq_push (std::shared_ptr<SearchNode> node) {
   this->fq->push(std::move(node));
+}
+
+void SolverBase::push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node) {
+  if (! this->max_search_depth.has_value())
+    this->fq_push(exp_node);
+  else if (exp_node->get_depth() < this->max_search_depth.value())
+    this->fq_push(exp_node);
 }
 
 std::shared_ptr<SearchNode> SolverBase::fq_pop () {

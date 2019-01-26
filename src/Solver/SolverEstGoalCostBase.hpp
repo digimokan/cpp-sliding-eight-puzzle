@@ -64,7 +64,6 @@ protected:
 private:
 
   // fields
-  const std::optional<size_t> max_search_depth;
   const std::shared_ptr<EstGoalCostIface> est_cost;
 
   // base / derived methods
@@ -72,7 +71,6 @@ private:
 
   // helper methods
   void keep_lowest_cost_fq_node (const std::shared_ptr<SearchNode>& exp_node, const std::shared_ptr<SearchNode>& fq_node);
-  void push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node);
 
 };
 
