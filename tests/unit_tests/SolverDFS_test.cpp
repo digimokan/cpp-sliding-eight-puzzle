@@ -134,10 +134,10 @@ TEST_CASE("3-step solution") {
 // fails: times out after about 5 min
 TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
 
-  constexpr size_t num_steps{ 6 };
-  constexpr size_t path_cost{ 17 };
-  constexpr size_t num_fq_nodes_popped{ 25 };
-  constexpr size_t max_fq_size{ 18 };
+  constexpr size_t num_steps{ 31270 };
+  constexpr size_t path_cost{ 140555 };
+  constexpr size_t num_fq_nodes_popped{ 33036 };
+  constexpr size_t max_fq_size{ 23500 };
   std::array<Board, num_steps> boards{
     Board{"134862705"}, Board{"134802765"},
     Board{"134820765"}, Board{"130824765"},
