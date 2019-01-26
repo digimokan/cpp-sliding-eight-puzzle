@@ -151,7 +151,7 @@ TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
 
 }
 
-// passes, but takes about 90 sec to run (when built with RELEASE)
+// passes, but takes about 7 min to run
 TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 25126 };
@@ -171,7 +171,7 @@ TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 
 }
 
-// passes, but takes about 2 sec to run (when built with RELEASE)
+// passes, but takes about 10 sec to run
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 4579 };
