@@ -194,7 +194,7 @@ TEST_CASE("\"medium\" solution") {
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 31 };
-  constexpr size_t path_cost{ 17 };
+  constexpr size_t path_cost{ 128 };
   constexpr size_t num_fq_nodes_popped{ 181021 };
   constexpr size_t max_fq_size{ 22378 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
