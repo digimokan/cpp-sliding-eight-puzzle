@@ -208,6 +208,7 @@ if(BUILD_TESTING)
   add_executable("${testing_exec_to_build}" ${testing_sources})
   # cmake ctests to run / linked libs
   add_test(NAME "${testing_exec_to_build}" COMMAND "${testing_exec_to_build}")
+  set_tests_properties("${testing_exec_to_build}" PROPERTIES TIMEOUT 86400)
   # link libs --> executables
   target_link_libraries("${testing_exec_to_build}" PRIVATE user_lib)
 
