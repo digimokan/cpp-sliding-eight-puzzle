@@ -54,7 +54,7 @@ void SolverBase::fq_push (std::shared_ptr<SearchNode> node) {
   this->fq->push(std::move(node));
 }
 
-void SolverBase::push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node) {
+void SolverBase::fq_push_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node) {
   if (! this->max_search_depth.has_value())
     this->fq_push(exp_node);
   else if (exp_node->get_depth() < this->max_search_depth.value())
@@ -125,7 +125,7 @@ std::shared_ptr<SearchNode> SolverBase::get_goal_node () const {
   return this->goal_node.value();
 }
 
-Solution SolverBase::make_solution_from_goal_node () const {
+Solution SolverBase::make_solution () const {
   if (this->not_found_goal_node())
     return Solution{
       this->fq->get_num_nodes_popped(),

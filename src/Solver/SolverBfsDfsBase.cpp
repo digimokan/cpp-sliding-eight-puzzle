@@ -42,7 +42,7 @@ Solution SolverBfsDfsBase::solve () {
     this->add_to_history(fnode);
     this->expand_frontier(fnode);
   }
-  return this->make_solution_from_goal_node();
+  return this->make_solution();
 }
 
 void SolverBfsDfsBase::act_on_expanded_node (const std::shared_ptr<SearchNode>& enode) {
@@ -52,7 +52,7 @@ void SolverBfsDfsBase::act_on_expanded_node (const std::shared_ptr<SearchNode>& 
   else if (qnode.has_value())
     this->keep_lowest_cost_fq_node(enode, qnode.value());
   else if (this->not_in_history(enode->get_board()))
-    this->push_to_fq_on_depth_limit(enode);
+    this->fq_push_on_depth_limit(enode);
 }
 
 /*******************************************************************************

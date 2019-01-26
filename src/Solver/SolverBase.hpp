@@ -68,7 +68,7 @@ protected:
   // specialized methods
   void expand_frontier (const std::shared_ptr<SearchNode>& frontier_node);
   void fq_push (std::shared_ptr<SearchNode>);
-  void push_to_fq_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node);
+  void fq_push_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node);
   std::shared_ptr<SearchNode> fq_pop ();
   bool fq_contains (const Board&) const;
   bool fq_not_contains (const Board&) const;
@@ -85,7 +85,7 @@ protected:
   bool not_found_goal_node () const;
   void set_goal_node (std::shared_ptr<SearchNode>);
   std::shared_ptr<SearchNode> get_goal_node () const;
-  Solution make_solution_from_goal_node () const;
+  Solution make_solution () const;
 
 private:
 
