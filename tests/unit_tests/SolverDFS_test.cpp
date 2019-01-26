@@ -191,13 +191,13 @@ TEST_CASE("\"medium\" solution" * doctest::skip(true)) {
 
 }
 
-// not attempted ("easy" puzzle currently fails)
+// passes, but takes about 2 sec to run (when built with RELEASE)
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
-  constexpr size_t num_steps{ 31 };
-  constexpr size_t path_cost{ 17 };
-  constexpr size_t num_fq_nodes_popped{ 181021 };
-  constexpr size_t max_fq_size{ 22378 };
+  constexpr size_t num_steps{ 4579 };
+  constexpr size_t path_cost{ 20438 };
+  constexpr size_t num_fq_nodes_popped{ 4702 };
+  constexpr size_t max_fq_size{ 3650 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverDFS solver{ boards.at(0), boards.at(1), move_cost };
