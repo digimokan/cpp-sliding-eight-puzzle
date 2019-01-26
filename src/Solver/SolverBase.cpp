@@ -45,20 +45,16 @@ SolverBase::SolverBase (Board start_board, Board goal_board,
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-void SolverBase::expand_frontier (const std::shared_ptr<SearchNode>& frontier_node) {
+void SolverBase::expand_frontier_on_depth_limit (const std::shared_ptr<SearchNode>& frontier_node) {
   auto act = [this] (auto exp_node) { this->act_on_expanded_node(exp_node); };
-  this->search_graph->expand(frontier_node, act);
+  if (! this->max_search_depth.has_value())
+    this->search_graph->expand(frontier_node, act);
+  else if (frontier_node->get_depth() < this->max_search_depth.value())
+    this->search_graph->expand(frontier_node, act);
 }
 
 void SolverBase::fq_push (std::shared_ptr<SearchNode> node) {
   this->fq->push(std::move(node));
-}
-
-void SolverBase::fq_push_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node) {
-  if (! this->max_search_depth.has_value())
-    this->fq_push(exp_node);
-  else if (exp_node->get_depth() < this->max_search_depth.value())
-    this->fq_push(exp_node);
 }
 
 std::shared_ptr<SearchNode> SolverBase::fq_pop () {

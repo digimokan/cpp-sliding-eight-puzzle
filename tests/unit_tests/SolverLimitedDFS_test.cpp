@@ -61,7 +61,7 @@ TEST_CASE("goal_board == start_board (1-step solution)") {
 
 }
 
-TEST_CASE("2-step solution" * doctest::skip(true)) {
+TEST_CASE("2-step solution") {
 
   constexpr size_t num_steps{ 2 };
   constexpr size_t short_depth{ num_steps - 2 };
@@ -90,7 +90,7 @@ TEST_CASE("2-step solution" * doctest::skip(true)) {
   auto solution{ solver.solve() };
   auto short_solution{ short_solver.solve() };
 
-  WARN_FALSE_MESSAGE(short_solution.is_solved(), "Should fail, but current depth logic not correct");
+  CHECK_FALSE(short_solution.is_solved());
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
   solution.for_each_step(act);
@@ -144,7 +144,7 @@ TEST_CASE("6-step \"easy\" solution") {
   constexpr size_t num_steps{ 6 };
   constexpr size_t short_depth{ num_steps - 2 };
   constexpr size_t path_cost{ 17 };
-  constexpr size_t num_fq_nodes_popped{ 42 };
+  constexpr size_t num_fq_nodes_popped{ 65 };
   constexpr size_t max_fq_size{ 7 };
   std::array<Board, num_steps> boards{
     Board{"134862705"}, Board{"134802765"},

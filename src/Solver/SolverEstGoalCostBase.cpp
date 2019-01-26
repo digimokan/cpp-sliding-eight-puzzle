@@ -51,7 +51,7 @@ Solution SolverEstGoalCostBase::solve () {
       return this->make_solution();
     }
     this->add_to_history(node);
-    this->expand_frontier(node);
+    this->expand_frontier_on_depth_limit(node);
   }
 }
 
@@ -59,7 +59,7 @@ void SolverEstGoalCostBase::act_on_expanded_node (const std::shared_ptr<SearchNo
   if (this->fq_contains(enode->get_board()))
     this->keep_lowest_cost_fq_node(enode, this->fq_get_node(enode->get_board()).value());
   else if (this->not_in_history(enode->get_board()))
-    this->fq_push_on_depth_limit(enode);
+    this->fq_push(enode);
 }
 
 /*******************************************************************************

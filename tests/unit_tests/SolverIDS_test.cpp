@@ -66,8 +66,8 @@ TEST_CASE("2-step solution") {
 
   constexpr size_t num_steps{ 2 };
   constexpr size_t path_cost{ 4 };
-  constexpr size_t num_fq_nodes_popped{ 2 };
-  constexpr size_t max_fq_size{ 1 };
+  constexpr size_t num_fq_nodes_popped{ 4 };
+  constexpr size_t max_fq_size{ 4 };
   std::array<Board, num_steps> boards{
     Board{"123804765"}, Board{"123840765"}
   };
@@ -101,8 +101,8 @@ TEST_CASE("3-step solution") {
 
   constexpr size_t num_steps{ 3 };
   constexpr size_t path_cost{ 9 };
-  constexpr size_t num_fq_nodes_popped{ 7 };
-  constexpr size_t max_fq_size{ 6 };
+  constexpr size_t num_fq_nodes_popped{ 11 };
+  constexpr size_t max_fq_size{ 9 };
   std::array<Board, num_steps> boards{
     Board{"123804765"}, Board{"123840765"}, Board{"123845760"}
   };
@@ -136,8 +136,8 @@ TEST_CASE("6-step \"easy\" solution") {
 
   constexpr size_t num_steps{ 6 };
   constexpr size_t path_cost{ 17 };
-  constexpr size_t num_fq_nodes_popped{ 63 };
-  constexpr size_t max_fq_size{ 18 };
+  constexpr size_t num_fq_nodes_popped{ 113 };
+  constexpr size_t max_fq_size{ 24 };
   std::array<Board, num_steps> boards{
     Board{"134862705"}, Board{"134802765"},
     Board{"134820765"}, Board{"130824765"},
@@ -175,8 +175,8 @@ TEST_CASE("\"medium\" solution") {
 
   constexpr size_t num_steps{ 10 };
   constexpr size_t path_cost{ 31 };
-  constexpr size_t num_fq_nodes_popped{ 645 };
-  constexpr size_t max_fq_size{ 56 };
+  constexpr size_t num_fq_nodes_popped{ 977 };
+  constexpr size_t max_fq_size{ 66 };
   std::array<Board, 2> boards{ Board{"281043765"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverIDS solver{ boards.at(0), boards.at(1), move_cost };
@@ -195,8 +195,8 @@ TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 33 };
   constexpr size_t path_cost{ 144 };
-  constexpr size_t num_fq_nodes_popped{ 401824 };
-  constexpr size_t max_fq_size{ 534 };
+  constexpr size_t num_fq_nodes_popped{ 401822 };
+  constexpr size_t max_fq_size{ 533 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverIDS solver{ boards.at(0), boards.at(1), move_cost };

@@ -66,9 +66,8 @@ protected:
   virtual void act_on_expanded_node (const std::shared_ptr<SearchNode>& enode) = 0;
 
   // specialized methods
-  void expand_frontier (const std::shared_ptr<SearchNode>& frontier_node);
+  void expand_frontier_on_depth_limit (const std::shared_ptr<SearchNode>& frontier_node);
   void fq_push (std::shared_ptr<SearchNode>);
-  void fq_push_on_depth_limit (const std::shared_ptr<SearchNode>& exp_node);
   std::shared_ptr<SearchNode> fq_pop ();
   bool fq_contains (const Board&) const;
   bool fq_not_contains (const Board&) const;
