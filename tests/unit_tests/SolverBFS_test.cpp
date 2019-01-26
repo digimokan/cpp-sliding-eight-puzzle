@@ -189,14 +189,13 @@ TEST_CASE("\"medium\" solution") {
 
 }
 
-// fails assert in FrontierQueueBase::prune_removed_nodes
-//    this->board_node_lookup.not_contains(next_node->get_board())
+// passes, but takes about 7 sec to run
 TEST_CASE("\"hard\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 31 };
-  constexpr size_t path_cost{ 31 };
-  constexpr size_t num_fq_nodes_popped{ 181021 };
-  constexpr size_t max_fq_size{ 22378 };
+  constexpr size_t path_cost{ 132 };
+  constexpr size_t num_fq_nodes_popped{ 180861 };
+  constexpr size_t max_fq_size{ 25047 };
   std::array<Board, 2> boards{ Board{"567408321"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
   SolverBFS solver{ boards.at(0), boards.at(1), move_cost };
