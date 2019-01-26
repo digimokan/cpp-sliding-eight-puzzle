@@ -131,40 +131,20 @@ TEST_CASE("3-step solution") {
 
 }
 
-// fails: times out after about 5 min
+// passes, but takes about 10 min to run
 TEST_CASE("6-step \"easy\" solution" * doctest::skip(true)) {
 
   constexpr size_t num_steps{ 31270 };
   constexpr size_t path_cost{ 140555 };
   constexpr size_t num_fq_nodes_popped{ 33036 };
   constexpr size_t max_fq_size{ 23500 };
-  std::array<Board, num_steps> boards{
-    Board{"134862705"}, Board{"134802765"},
-    Board{"134820765"}, Board{"130824765"},
-    Board{"103824765"}, Board{"123804765"}
-  };
-  std::array<std::optional<MoveDir>, num_steps> move_dirs{
-    std::nullopt, MoveDir::UP, MoveDir::RIGHT,
-    MoveDir::UP, MoveDir::LEFT, MoveDir::DOWN
-  };
-  std::array<unsigned int, num_steps> move_costs{
-    0, 6, 2,
-    4, 3, 2
-  };
+  std::array<Board, 2> boards{ Board{"134862705"}, Board{"123804765"} };
   auto move_cost{ std::make_shared<MoveCostSqVal>() };
-  SolverDFS solver{ boards.at(0), boards.at(num_steps - 1), move_cost };
-  size_t i{0};
-  auto act = [&boards, &move_dirs, &move_costs, &i] (auto node) {
-    CHECK_UNARY(node->get_board() == boards.at(i));
-    CHECK_UNARY(node->get_move_dir() == move_dirs.at(i));
-    CHECK_EQ(node->get_move_cost(), move_costs.at(i));
-    i++;
-  };
+  SolverDFS solver{ boards.at(0), boards.at(1), move_cost };
   auto solution{ solver.solve() };
 
   CHECK_UNARY(solution.is_solved());
   CHECK_EQ(solution.get_num_steps(), num_steps);
-  solution.for_each_step(act);
   CHECK_EQ(solution.get_total_cost(), path_cost);
   CHECK_EQ(solution.get_time_complexity(), num_fq_nodes_popped);
   CHECK_EQ(solution.get_space_complexity(), max_fq_size);
