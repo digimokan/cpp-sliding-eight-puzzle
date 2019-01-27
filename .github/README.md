@@ -14,7 +14,7 @@ written in C++.
 * [Design](#design)
 * [Requirements](#requirements)
 * [Quick Start](#quick-start)
-* [Sample Project Layout](#sample-project-layout)
+* [Sample Project Layout](#source-code-layout)
 * [Full Usage / Options](#full-usage--options)
 * [Examples](#examples)
 * [Contributing](#contributing)
@@ -29,7 +29,7 @@ and optimality.
 ## Features
 
 * Use different strategies as simple options.
-* Switch between different move-costs with an option.
+* Switch between different move costs with an option.
 * Perform low-level, common operations in constant time to maximize the solving
   speed of any strategy.
 
@@ -105,9 +105,9 @@ A paragraph or two about architecture.
 
 USAGE
 
-`eight-puzzle  -h`
+`eight-puzzle -h`
 
-`eight-puzzle  [-v|-c]  [-b|-d|-i|-u|-s|-1|-2|-3]  <start_board>  <goal_board>`  
+`eight-puzzle [-v|-c] [-b|-d|-i|-u|-s|-1|-2|-3] <start_board> <goal_board>`  
 
 ARGUMENTS
 
