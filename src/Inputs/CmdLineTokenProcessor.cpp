@@ -230,7 +230,7 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
             << "print this help message" << std::endl;
   std::cout << "  " << "-v, --move-cost-sq-val" << std::endl << "      "
             << "set move costs to the value of the square moved (default)" << std::endl;
-  std::cout << "  " << "-c, --breadth-first" << std::endl << "      "
+  std::cout << "  " << "-c, --move-cost-const" << std::endl << "      "
             << "set move costs to 1 (the traditional cost)" << std::endl;
   std::cout << "  " << "-b, --breadth-first" << std::endl << "      "
             << "find solution using breadth-first search (default)" << std::endl;
