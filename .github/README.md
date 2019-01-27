@@ -14,7 +14,7 @@ written in C++.
 * [Design](#design)
 * [Requirements](#requirements)
 * [Quick Start](#quick-start)
-* [Sample Project Layout](#source-code-layout)
+* [Source Code Layout](#source-code-layout)
 * [Full Usage / Options](#full-usage--options)
 * [Examples](#examples)
 * [Contributing](#contributing)
