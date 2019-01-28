@@ -3,6 +3,7 @@ task:
   container:
     image: gcc:latest
   script:
+    - git submodule update --init --recursive
     - cd tests
     - ./test_driver.sh
 
