@@ -1,0 +1,8 @@
+task:
+  name: linux_build
+  container:
+    image: gcc:latest
+  script:
+    - cd tests
+    - ./test_driver.sh
+

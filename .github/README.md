@@ -5,7 +5,8 @@ written in C++.
 
 [![Release](https://img.shields.io/github/release/digimokan/cpp-sliding-eight-puzzle.svg?label=release)](https://github.com/digimokan/cpp-sliding-eight-puzzle/releases/latest "Latest Release Notes")
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?label=license)](LICENSE.txt "Project License")
-[![Build Status](https://img.shields.io/travis/com/digimokan/cpp-sliding-eight-puzzle/master.svg?label=linux+build)](https://travis-ci.com/digimokan/cpp-sliding-eight-puzzle "Build And Test Results From Master Branch")
+[![Build Status](https://api.cirrus-ci.com/github/digimokan/cpp-sliding-eight-puzzle.svg?branch=master)](https://cirrus-ci.com/github/digimokan/cpp-sliding-eight-puzzle "Build And Test Results From Master Branch")
+
 
 ## Table Of Contents
 
