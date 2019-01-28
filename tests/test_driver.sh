@@ -1,8 +1,9 @@
 #!/bin/sh
 
-cd ..
+cd .. && \
 ./third_party/smart-build/src/smart-build.sh \
   --clean-all \
-  --build-type-debug \
-  --make-and-run-tests
+  --build-type-release \
+  --make-tests && \
+./eight-puzzle-tests --no-skip
 
