@@ -3,7 +3,7 @@ task:
   container:
     image: gcc:latest
   install_script:
-    - apt install cmake
+    - apt-get install cmake
   script:
     - git submodule update --init --recursive
   test_script:
