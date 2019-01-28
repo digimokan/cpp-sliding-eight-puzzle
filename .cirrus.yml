@@ -2,8 +2,11 @@ task:
   name: linux_build
   container:
     image: gcc:latest
+  install_script:
+    - apt install cmake
   script:
     - git submodule update --init --recursive
+  test_script:
     - cd tests
     - ./test_driver.sh
 
