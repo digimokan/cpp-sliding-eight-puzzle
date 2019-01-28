@@ -38,7 +38,7 @@ and optimality.
 Architecture diagram of main Solver interface and supporting interfaces, base
 classes, and classes:
 
-<img src="readme_assets/Solver UML Diagram.svg.svg" width="100%" height="400" alt="Architecture Diagram">
+<img src="readme_assets/Solver UML Diagram.svg" width="100%" height="400" alt="Architecture Diagram">
 
 ## Requirements
 
