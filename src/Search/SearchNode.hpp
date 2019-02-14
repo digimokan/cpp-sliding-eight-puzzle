@@ -67,7 +67,7 @@ public:
 
   // specialized methods
   void add_child (const std::shared_ptr<SearchNode>& child);
-  void remove_child (const std::weak_ptr<SearchNode>& child);
+  void remove_child (const std::shared_ptr<SearchNode>& child);
   bool is_root () const;
   bool has_children () const;
   bool is_leaf () const;
@@ -75,8 +75,8 @@ public:
 private:
 
   // fields
-  std::optional<std::shared_ptr<SearchNode>> parent;
-  std::list<std::weak_ptr<SearchNode>> children;
+  std::optional<std::weak_ptr<SearchNode>> parent;
+  std::list<std::shared_ptr<SearchNode>> children;
   size_t depth;
   size_t height;
   Board board;
