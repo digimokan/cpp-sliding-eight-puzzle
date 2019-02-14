@@ -57,7 +57,10 @@ SearchNode::SearchNode (const Board& board)
 *******************************************************************************/
 
 std::optional<std::shared_ptr<SearchNode>> SearchNode::get_parent () const {
-  return this->parent;
+  if (! this->parent.has_value())
+    return std::nullopt;
+  assert(! this->parent.value().expired());
+  return this->parent.value().lock();
 }
 
 void SearchNode::set_parent (std::optional<std::shared_ptr<SearchNode>> in_parent) {
@@ -74,12 +77,12 @@ size_t SearchNode::get_height () const {
 
 void SearchNode::update_height () {
   this->height = 0;
-  for (const auto& child : this->children) {
-    assert(! child.expired());
-    this->height = std::max(this->height, child.lock()->get_height() + 1);
+  for (const auto& child : this->children)
+    this->height = std::max(this->height, child->get_height() + 1);
+  if (this->parent.has_value()) {
+    assert(! this->parent.value().expired());
+    this->parent.value().lock()->update_height();
   }
-  if (this->parent.has_value())
-    this->parent.value()->update_height();
 }
 
 Board SearchNode::get_board () const {
@@ -107,11 +110,9 @@ void SearchNode::add_child (const std::shared_ptr<SearchNode>& child) {
   this->update_height();
 }
 
-void SearchNode::remove_child (const std::weak_ptr<SearchNode>& child) {
-  child.lock()->set_parent(std::nullopt);
-  auto rem_child{ [child] (std::weak_ptr<SearchNode> c) {
-    return !(c.owner_before(child) || child.owner_before(c));
-  } };
+void SearchNode::remove_child (const std::shared_ptr<SearchNode>& child) {
+  child->set_parent(std::nullopt);
+  auto rem_child{ [child] (std::shared_ptr<SearchNode> c) { return (c == child); } };
   this->children.remove_if(rem_child);
   this->update_height();
 }
