@@ -51,7 +51,7 @@ classes, and classes:
 1. Clone the project into a local project directory:
 
    ```shell
-   $ git clone git@github.com:digimokan/cpp-sliding-eight-puzzle.git
+   $ git clone --recurse-submodules git@github.com:digimokan/cpp-sliding-eight-puzzle.git
    ```
 
 2. Change to the local project directory:
